@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/main.css}" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add Tourist Attraction</h1>
+<div th:object="${attraction}">
+    <thead>
+    <tr>
+        <th>Name:</th>
+    </tr>
+    <input class="form-control"
+           type="text"
+           th:value="${attraction.name}"
+           th:field="*{name}"/>
+    </thead>
+    <br>
+    <thead>
+    <tr>
+        <th>Description:</th>
+        <input class="form-control"
+               type="text"
+               th:value="${attraction.description}"
+               th:field="*{description}"/>
+    </tr>
+    </thead>
+    <br>
+    <thead>
+    <tr>
+        <th>City:</th>
+        <input class="form-control"
+               type="text"
+               th:value="${attraction.city}"
+               th:field="*{city}"/>
+    </tr>
+    </thead>
+    <tbody>
+<br>
+</div>
+<button type="submit">Ok</button>
+<button type="submit">Fortryd</button>
+</body>
+</html>
