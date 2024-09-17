@@ -13,17 +13,33 @@
     <tr>
         <th>Name</th>
         <th>Description</th>
+        <th>City</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="touristattraction : ${attractions}">
         <td th:text="${touristattraction.name}"></td>
         <td th:text="${touristattraction.description}"></td>
+        <td th:text="${touristattraction.city}"></td>
         <td>
-        <form th:action="@{/attractions/{name}/tags(name=${touristattraction.name})}" method="get" target="_blank">
-            <button type="submit">Tags</button>
-        </form></td>
+            <form th:action="@{ ${touristattraction.name} + '/edit'}" method="get">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td> <!--Modificer action endpoint-->
+            <form th:action="@{/attractions/{name}/edit(name=${touristattraction.name})}" method="get">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/attractions/{name}/tags(name=${touristattraction.name})}" method="get" target="_blank">
+                <button type="submit">Tags</button>
+            </form>
+        </td>
+
+
     </tr>
+
     </tbody>
 </table>
 <br>
@@ -31,7 +47,6 @@
 <form th:action="@{/add}" method="get">
     <button type="submit">Add attraction</button>
 </form>
-
 
 
 </body>
