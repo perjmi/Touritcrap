@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
 //feauture branch
 @Repository
 public class TouristRepository {
@@ -42,14 +43,6 @@ public class TouristRepository {
         return null;
     }
 
-
-//    public void editAttraction(String name) {
-//        for (TouristAttraction t : touristAttractions) {
-//            if (t.getName().equals(name)) {
-//                t.setTags();
-//            }
-//        }
-//    }
 
     //DELETE
     public void deleteAttraction(String name) {

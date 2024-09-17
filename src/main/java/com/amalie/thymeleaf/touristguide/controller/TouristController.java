@@ -57,14 +57,23 @@ public class TouristController {
         return "tags";
     }
 
-//    @GetMapping("/{name}/edit")
-//    public String editAttraction(@PathVariable String name, Model model) {
-//
-//    }
+    @GetMapping("/{name}/edit")
+    public String editAttraction(@PathVariable String name, Model model) {
+        TouristAttraction t = touristService.getAttractionByName(name);
+        model.addAttribute("attraction", t);
+        model.addAttribute("city", touristService.getCities());
+        model.addAttribute("description", t.getDescription());
+        model.addAttribute("availableTags", touristService.getTags());
+        return "editAttraction";
+    }
+
+    @PostMapping("/update")
+    public String editAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
+        touristService.deleteAttraction(touristAttraction.getName());
+        touristService.saveAttraction(touristAttraction);
+        model.addAttribute("attraction", touristAttraction);
+        return "redirect:/attractions";
+    }
+    //hej
+
 }
-//    @GetMapping("/attractions/{name}")
-//    public String getAttractionByName(@PathVariable String name, Model model) {
-//        TouristAttraction t = touristService.getAttractionByName(name);
-//        model.addAttribute("attraction", t);
-//        return "KENDER IK NAVN";
-//    }
