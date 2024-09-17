@@ -74,5 +74,6 @@ public class TouristController {
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
     }
+    //hej
 
 }
