@@ -76,9 +76,3 @@ public class TouristController {
     }
 
 }
-//    @GetMapping("/attractions/{name}")
-//    public String getAttractionByName(@PathVariable String name, Model model) {
-//        TouristAttraction t = touristService.getAttractionByName(name);
-//        model.addAttribute("attraction", t);
-//        return "KENDER IK NAVN";
-//    }
