@@ -32,10 +32,11 @@ public class TouristController {
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
         model.addAttribute("attraction", t);
-        model.addAttribute("availableTags", Arrays.asList(Tag.values()));
+       //model.addAttribute("availableTags", Arrays.asList(Tag.values()));
+        model.addAttribute("availableTags", touristService.getTags());
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
-        model.addAttribute("city", t.getCity());
+        model.addAttribute("city", touristService.getCities());
         return "addAttraction";
     }
 
@@ -43,7 +44,7 @@ public class TouristController {
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
-        return "attractionAdded";
+        return "redirect:/attractions";
 
     }
 

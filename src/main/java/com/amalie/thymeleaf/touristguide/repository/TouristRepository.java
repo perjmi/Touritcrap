@@ -66,9 +66,7 @@ public class TouristRepository {
 
     public List<String> getCities() {
         List<String> citites = new ArrayList<>();
-        for (TouristAttraction t : touristAttractions) {
-            citites.add(t.getCity());
-        }
+        Collections.addAll(citites, "Roskilde", "Copenhagen", "Herning", "Holstebro", "Aarhus");
         return citites;
     }
 
@@ -76,9 +74,10 @@ public class TouristRepository {
         List<String> tags = new ArrayList<>();
         for (TouristAttraction t : touristAttractions) {
             for (Tag tag : t.getTags()) {
-                tags.add(tag.name());
+                tags.add(tag.getDisplayName());
             }
         }
         return tags;
     }
+
 }

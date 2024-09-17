@@ -20,24 +20,26 @@
            th:value="${attraction.description}"
            th:field="*{description}"/>
     <br>
-    <label for="city">City:</label>
-    <input id="city" class="form-control"
-           type="text"
-           th:value="${attraction.city}"
-           th:field="*{city}"/>
+    <label for="city" id="city">City:</label>
+    <select th:field="*{city}">
+        <option th:each="city : ${city}" th:value="${city}" th:text="${city}">
+        </option>
+    </select>
     <br>
     <label>Tags:</label>
+    <br>
     <div>
         <span th:each="tag : ${availableTags}">
-            <input type="checkbox" th:id="${tag.name()}" th:value="${tag.name()}" th:name="selectedTags" />
-            <label th:for="${tag.name()}" th:text="${tag.displayName}"></label><br>
+            <input type="checkbox" th:id="${tag}" th:value="${tag}" th:name="selectedTags"/>
+            <label th:for="${tag}" th:text="${tag}"></label><br>
         </span>
     </div>
     <br><br>
-<button type="submit">Add</button>
+    <button type="submit">Add</button>
+
 </form>
 <form th:action="@{/attractions}" method="get">
-<button type="submit">Regret</button>
+    <button type="submit">Regret</button>
 </form>
 </body>
 </html>
