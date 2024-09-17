@@ -31,9 +31,9 @@ public class TouristService {
     }
 
 
-    public void editAttraction(String name, String updatedName) {
-        touristRepository.editAttraction(name, updatedName);
-    }
+//    public void editAttraction(String name, String updatedName) {
+//        touristRepository.editAttraction(name, updatedName);
+//    }
 
     //DELETE
     public void deleteAttraction(String name) {
