@@ -32,7 +32,7 @@ public class TouristController {
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
         model.addAttribute("attraction", t);
-       //model.addAttribute("availableTags", Arrays.asList(Tag.values()));
+        //model.addAttribute("availableTags", Arrays.asList(Tag.values()));
         model.addAttribute("availableTags", touristService.getTags());
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
@@ -56,6 +56,11 @@ public class TouristController {
         model.addAttribute("tags", tags);
         return "tags";
     }
+
+//    @GetMapping("/{name}/edit")
+//    public String editAttraction(@PathVariable String name, Model model) {
+//
+//    }
 }
 //    @GetMapping("/attractions/{name}")
 //    public String getAttractionByName(@PathVariable String name, Model model) {

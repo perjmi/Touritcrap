@@ -30,10 +30,6 @@ public class TouristService {
         return touristRepository.getAttractionByName(name);
     }
 
-    //UPDATE
-    public void updateAttraction(int index, TouristAttraction t) {
-        touristRepository.updateAttraction(index, t);
-    }
 
     public void editAttraction(String name, String updatedName) {
         touristRepository.editAttraction(name, updatedName);

@@ -42,18 +42,14 @@ public class TouristRepository {
         return null;
     }
 
-    //UPDATE
-    public void updateAttraction(int index, TouristAttraction t) {
-        touristAttractions.set(index, t);
-    }
 
-    public void editAttraction(String name, String updatedName) {
-        for (TouristAttraction t : touristAttractions) {
-            if (t.getName().equals(name)) {
-                t.setName(updatedName);
-            }
-        }
-    }
+//    public void editAttraction(String name) {
+//        for (TouristAttraction t : touristAttractions) {
+//            if (t.getName().equals(name)) {
+//                t.setTags();
+//            }
+//        }
+//    }
 
     //DELETE
     public void deleteAttraction(String name) {
