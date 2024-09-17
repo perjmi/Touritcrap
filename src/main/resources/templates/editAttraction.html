@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/main.css}" rel="stylesheet">
+    <title>Title</title>
+</head>
+<body>
+<h1>Edit the tourist attraction: <span th:text="${attraction.name}"></span></h1>
+<form action="#" th:action="@{/update}" class="form-label" th:object="${attraction}" method="post">
+
+    <input id="name" class="form-control"
+           type="hidden"
+           th:value="${attraction.name}"
+           th:field="*{name}"/>
+
+    <br>
+    <label for="description">Description:</label>
+    <input id="description" class="form-control"
+           type="text"
+           th:value="${attraction.description}"
+           th:field="*{description}"/>
+    <br>
+    <label for="city" id="city">City:</label>
+    <select th:field="*{city}">
+        <option th:each="city : ${city}" th:value="${city}" th:text="${city}">
+        </option>
+    </select>
+    <br>
+    <label>Tags:</label>
+    <br>
+    <div>
+        <span th:each="tag : ${availableTags}">
+            <input type="checkbox" th:id="${tag}" th:value="${tag}" th:name="selectedTags"/>
+            <label th:for="${tag}" th:text="${tag}"></label><br>
+        </span>
+    </div>
+    <br><br>
+    <button type="submit">Confirm edit</button>
+
+</form>
+<form th:action="@{/attractions}" method="get">
+    <button type="submit">Regret</button>
+</form>
+</body>
+</html>

@@ -35,7 +35,6 @@ public class TouristService {
 //        touristRepository.editAttraction(name, updatedName);
 //    }
 
-    //DELETE
     public void deleteAttraction(String name) {
         touristRepository.deleteAttraction(name);
     }
@@ -46,4 +45,5 @@ public class TouristService {
     public List<String> getTags() {
        return touristRepository.getTags();
     }
+
 }
