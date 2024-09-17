@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/main.css}" rel="stylesheet">
@@ -8,40 +7,37 @@
 </head>
 <body>
 <h1>Add Tourist Attraction</h1>
-<div th:object="${attraction}">
-    <thead>
-    <tr>
-        <th>Name:</th>
-    </tr>
-    <input class="form-control"
+<form action="#" th:action="@{/add}" class="form-label" th:object="${attraction}" method="post">
+    <label for="name">Name:</label>
+    <input id="name" class="form-control"
            type="text"
            th:value="${attraction.name}"
            th:field="*{name}"/>
-    </thead>
     <br>
-    <thead>
-    <tr>
-        <th>Description:</th>
-        <input class="form-control"
-               type="text"
-               th:value="${attraction.description}"
-               th:field="*{description}"/>
-    </tr>
-    </thead>
+    <label for="description">Description:</label>
+    <input id="description" class="form-control"
+           type="text"
+           th:value="${attraction.description}"
+           th:field="*{description}"/>
     <br>
-    <thead>
-    <tr>
-        <th>City:</th>
-        <input class="form-control"
-               type="text"
-               th:value="${attraction.city}"
-               th:field="*{city}"/>
-    </tr>
-    </thead>
-    <tbody>
-<br>
-</div>
-<button type="submit">Ok</button>
-<button type="submit">Fortryd</button>
+    <label for="city">City:</label>
+    <input id="city" class="form-control"
+           type="text"
+           th:value="${attraction.city}"
+           th:field="*{city}"/>
+    <br>
+    <label>Tags:</label>
+    <div>
+        <span th:each="tag : ${availableTags}">
+            <input type="checkbox" th:id="${tag.name()}" th:value="${tag.name()}" th:name="selectedTags" />
+            <label th:for="${tag.name()}" th:text="${tag.displayName}"></label><br>
+        </span>
+    </div>
+    <br><br>
+<button type="submit">Add</button>
+</form>
+<form th:action="@{/add}" method="get">
+<button type="submit">Regret</button>
+</form>
 </body>
 </html>

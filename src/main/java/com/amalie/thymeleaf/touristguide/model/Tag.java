@@ -7,14 +7,7 @@ public enum Tag {
     MUSEUM("Museum"),
     NATUR("Natur"),
     HISTORIE("Historie"),
-    STRAND("Strand"),
-    RESTAURANT("Restaurant"),
-    SHOPPING("Shopping"),
-    SPORT("Sport"),
-    KONCERT("Koncert"),
-    FESTIVAL("Festival"),
-    SEVÆRDIGHED("Seværdighed"),
-    PARK("Park");
+    STRAND("Strand");
 
     private String displayName;
 

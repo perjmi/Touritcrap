@@ -9,10 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class TouristController {
     private final TouristService touristService;
 
@@ -31,7 +32,7 @@ public class TouristController {
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
         model.addAttribute("attraction", t);
-        model.addAttribute("tags", t.getTags());
+        model.addAttribute("availableTags", Arrays.asList(Tag.values()));
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
         model.addAttribute("city", t.getCity());
@@ -39,19 +40,12 @@ public class TouristController {
     }
 
     @PostMapping("/add")
-    public String addAttraction(TouristAttraction touristAttraction, Model model) {
+    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
         return "attractionAdded";
 
     }
-
-//    @GetMapping("/attractions/{name}")
-//    public String getAttractionByName(@PathVariable String name, Model model) {
-//        TouristAttraction t = touristService.getAttractionByName(name);
-//        model.addAttribute("attraction", t);
-//        return "KENDER IK NAVN";
-//    }
 
     @GetMapping("/attractions/{name}/tags")
     public String getAttractionTags(@PathVariable String name, Model model) {
@@ -62,3 +56,9 @@ public class TouristController {
         return "tags";
     }
 }
+//    @GetMapping("/attractions/{name}")
+//    public String getAttractionByName(@PathVariable String name, Model model) {
+//        TouristAttraction t = touristService.getAttractionByName(name);
+//        model.addAttribute("attraction", t);
+//        return "KENDER IK NAVN";
+//    }
