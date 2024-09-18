@@ -8,11 +8,9 @@ import java.util.*;
 
 @Repository
 public class TouristRepository {
-    final private List<TouristAttraction> touristAttractions;
+    final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
     public TouristRepository() {
-        touristAttractions = new ArrayList<>(
-        );
         TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen");
         t1.setTags(Arrays.asList(Tag.FORLYSTELSE, Tag.BALLON));
         TouristAttraction t2 = new TouristAttraction("Zoo", "A wildlife park, home to a wide variety of animals from around the world.", "Copenhagen");
@@ -39,15 +37,25 @@ public class TouristRepository {
         return null;
     }
 
-
+//    public void deleteAttraction(String name) {
+//        for (TouristAttraction t : touristAttractions) {
+//            if (t.getName().equals(name)) {
+//                touristAttractions.remove(t);
+//            }
+//        }
+//    }
     //DELETE
     public void deleteAttraction(String name) {
-        for (TouristAttraction t : touristAttractions) {
+        Iterator<TouristAttraction> iterator = touristAttractions.iterator();
+        while (iterator.hasNext()) {
+            TouristAttraction t = iterator.next();
             if (t.getName().equals(name)) {
-                touristAttractions.remove(t);
+                iterator.remove(); // Brug iterator til sikker fjernelse
+                break;
             }
         }
     }
+
 
     public List<String> getCities() {
         List<String> citites = new ArrayList<>();
