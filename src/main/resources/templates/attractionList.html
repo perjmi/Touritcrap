@@ -27,7 +27,7 @@
             </form>
         </td>
         <td> <!--Modificer action endpoint-->
-            <form th:action="@{/attractions/{name}/edit(name=${touristattraction.name})}" method="get">
+            <form th:action="@{/delete/{name}(name=${touristattraction.name})}" method="post">
                 <button type="submit">Delete</button>
             </form>
         </td>

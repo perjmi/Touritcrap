@@ -8,7 +8,7 @@ public class TouristAttraction {
     private String name;
     private String description;
     private String city;
-    private List<Tag> tags;
+    private List<Tag> tags = new ArrayList<>();
 
     public TouristAttraction() {
 
@@ -18,7 +18,6 @@ public class TouristAttraction {
         this.name = name;
         this.description = description;
         this.city = city;
-        this.tags = new ArrayList<>();
     }
 
     public String getCity() {

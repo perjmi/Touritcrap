@@ -28,6 +28,15 @@ public class TouristController {
         return "attractionList";
     }
 
+    @GetMapping("/attractions/{name}/tags")
+    public String getAttractionTags(@PathVariable String name, Model model) {
+        TouristAttraction t = touristService.getAttractionByName(name);
+        List<Tag> tags = touristService.getAttractionByName(name).getTags();
+        model.addAttribute("attraction", t);
+        model.addAttribute("tags", tags);
+        return "tags";
+    }
+
     @GetMapping("/add")
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
@@ -40,21 +49,12 @@ public class TouristController {
         return "addAttraction";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
 
-    }
-
-    @GetMapping("/attractions/{name}/tags")
-    public String getAttractionTags(@PathVariable String name, Model model) {
-        TouristAttraction t = touristService.getAttractionByName(name);
-        List<Tag> tags = touristService.getAttractionByName(name).getTags();
-        model.addAttribute("attraction", t);
-        model.addAttribute("tags", tags);
-        return "tags";
     }
 
     @GetMapping("/{name}/edit")
@@ -69,8 +69,14 @@ public class TouristController {
 
     @PostMapping("/update")
     public String editAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
+        touristService.updateAttraction(touristAttraction);
+        model.addAttribute("attraction", touristAttraction);
+        return "redirect:/attractions";
+    }
+
+    @PostMapping("/delete/{name}")
+    public String deleteAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
         touristService.deleteAttraction(touristAttraction.getName());
-        touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
     }

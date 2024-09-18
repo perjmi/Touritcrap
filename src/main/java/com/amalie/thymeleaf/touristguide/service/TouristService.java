@@ -30,20 +30,20 @@ public class TouristService {
         return touristRepository.getAttractionByName(name);
     }
 
-
-//    public void editAttraction(String name, String updatedName) {
-//        touristRepository.editAttraction(name, updatedName);
-//    }
-
     public void deleteAttraction(String name) {
         touristRepository.deleteAttraction(name);
     }
+
     public List<String> getCities() {
-       return touristRepository.getCities();
+        return touristRepository.getCities();
     }
 
     public List<String> getTags() {
-       return touristRepository.getTags();
+        return touristRepository.getTags();
+    }
+
+    public void updateAttraction(TouristAttraction updatedAttraction) {
+        touristRepository.updateAttraction(updatedAttraction);
     }
 
 }

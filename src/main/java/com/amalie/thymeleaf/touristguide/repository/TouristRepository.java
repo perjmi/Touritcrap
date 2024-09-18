@@ -4,20 +4,16 @@ import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-//feauture branch
 @Repository
 public class TouristRepository {
-    private List<TouristAttraction> touristAttractions;
+    final private List<TouristAttraction> touristAttractions;
 
     public TouristRepository() {
         touristAttractions = new ArrayList<>(
         );
-        TouristAttraction t1 = new TouristAttraction("Tivoli", "A playfull wonderland", "Copenhagen");
+        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen");
         t1.setTags(Arrays.asList(Tag.FORLYSTELSE, Tag.BALLON));
         TouristAttraction t2 = new TouristAttraction("Zoo", "A wildlife park, home to a wide variety of animals from around the world.", "Copenhagen");
         t2.setTags(Arrays.asList(Tag.NATUR, Tag.NATUR));
@@ -69,4 +65,13 @@ public class TouristRepository {
         return tags;
     }
 
+    public void updateAttraction(TouristAttraction updatedAttraction) {
+        for (TouristAttraction attraction : touristAttractions) {
+            if (attraction.getName().equals(updatedAttraction.getName())) {
+                attraction.setDescription(updatedAttraction.getDescription());
+                attraction.setCity(updatedAttraction.getCity());
+                attraction.setTags(updatedAttraction.getTags());
+            }
+        }
+    }
 }
