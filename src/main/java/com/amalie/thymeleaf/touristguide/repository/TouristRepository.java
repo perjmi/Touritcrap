@@ -46,9 +46,9 @@ public class TouristRepository {
 //    }
     //DELETE
     public void deleteAttraction(String name) {
-        Iterator<TouristAttraction> iterator = touristAttractions.iterator();
-        while (iterator.hasNext()) {
-            TouristAttraction t = iterator.next();
+        Iterator<TouristAttraction> iterator = touristAttractions.iterator(); //opretter iterator på touristattraction samling
+        while (iterator.hasNext()) { //så længe der er flere elementer i samling
+            TouristAttraction t = iterator.next(); //henter det næste element fra samling
             if (t.getName().equals(name)) {
                 iterator.remove(); // Brug iterator til sikker fjernelse
                 break;
