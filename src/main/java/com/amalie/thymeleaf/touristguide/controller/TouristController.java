@@ -3,13 +3,12 @@ package com.amalie.thymeleaf.touristguide.controller;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import com.amalie.thymeleaf.touristguide.service.TouristService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -31,9 +30,8 @@ public class TouristController {
     @GetMapping("/attractions/{name}/tags")
     public String getAttractionTags(@PathVariable String name, Model model) {
         TouristAttraction t = touristService.getAttractionByName(name);
-        List<Tag> tags = touristService.getAttractionByName(name).getTags();
         model.addAttribute("attraction", t);
-        model.addAttribute("tags", tags);
+        model.addAttribute("tags", touristService.getTags(t));
         return "tags";
     }
 
@@ -41,8 +39,7 @@ public class TouristController {
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
         model.addAttribute("attraction", t);
-        //model.addAttribute("availableTags", Arrays.asList(Tag.values()));
-        model.addAttribute("availableTags", touristService.getTags());
+        model.addAttribute("availableTags", Arrays.asList(Tag.values()));
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
         model.addAttribute("city", touristService.getCities());
@@ -63,7 +60,7 @@ public class TouristController {
         model.addAttribute("attraction", t);
         model.addAttribute("city", touristService.getCities());
         model.addAttribute("description", t.getDescription());
-        model.addAttribute("availableTags", touristService.getTags());
+        model.addAttribute("availableTags", Tag.values());
         return "editAttraction";
     }
 
@@ -78,5 +75,10 @@ public class TouristController {
         touristService.deleteAttraction(touristAttraction.getName());
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
+    }
+
+    @GetMapping("/info")
+    public String getInfo() {
+        return "info";
     }
 }

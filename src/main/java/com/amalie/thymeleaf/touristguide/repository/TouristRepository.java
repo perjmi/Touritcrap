@@ -37,7 +37,7 @@ public class TouristRepository {
         return null;
     }
 
-//    public void deleteAttraction(String name) {
+    //    public void deleteAttraction(String name) {
 //        for (TouristAttraction t : touristAttractions) {
 //            if (t.getName().equals(name)) {
 //                touristAttractions.remove(t);
@@ -63,15 +63,10 @@ public class TouristRepository {
         return citites;
     }
 
-    public List<String> getTags() {
-        List<String> tags = new ArrayList<>();
-        for (TouristAttraction t : touristAttractions) {
-            for (Tag tag : t.getTags()) {
-                tags.add(tag.getDisplayName());
-            }
-        }
-        return tags;
+    public List<Tag> getTags(TouristAttraction t) {
+        return t.getTags();
     }
+
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
         for (TouristAttraction attraction : touristAttractions) {

@@ -37,13 +37,18 @@ public class TouristService {
     public List<String> getCities() {
         return touristRepository.getCities();
     }
-
-    public List<String> getTags() {
-        return touristRepository.getTags();
+    
+    public List<Tag> getTags(TouristAttraction t) {
+        return touristRepository.getTags(t);
     }
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
-        touristRepository.updateAttraction(updatedAttraction);
+        TouristAttraction existingAttraction = touristRepository.getAttractionByName(updatedAttraction.getName());
+        if (existingAttraction != null) {
+            existingAttraction.setDescription(updatedAttraction.getDescription());
+            existingAttraction.setCity(updatedAttraction.getCity());
+            existingAttraction.setTags(updatedAttraction.getTags());
+        }
     }
 
 }

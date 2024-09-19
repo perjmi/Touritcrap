@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/main.css}" rel="stylesheet">
-    <title>Title</title>
+    <title>Attraction list</title>
+
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}"></div>
 <h1>All Attractions:</h1>
 <table>
     <thead>
