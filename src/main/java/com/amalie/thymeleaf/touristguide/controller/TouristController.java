@@ -71,9 +71,8 @@ public class TouristController {
     }
 
     @PostMapping("/delete/{name}")
-    public String deleteAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) {
+    public String deleteAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         touristService.deleteAttraction(touristAttraction.getName());
-        model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
     }
 
