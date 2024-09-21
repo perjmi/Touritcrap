@@ -11,7 +11,7 @@ public class TouristRepository {
     final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
     public TouristRepository() {
-        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen");
+        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen", 100);
         t1.setTags(Arrays.asList(Tag.FORLYSTELSE, Tag.BALLON));
         TouristAttraction t2 = new TouristAttraction("Zoo", "A wildlife park, home to a wide variety of animals from around the world.", "Copenhagen");
         t2.setTags(Arrays.asList(Tag.NATUR, Tag.NATUR));
@@ -37,7 +37,7 @@ public class TouristRepository {
         return null;
     }
 
-//    public void deleteAttraction(String name) {
+    //    public void deleteAttraction(String name) {
 //        for (TouristAttraction t : touristAttractions) {
 //            if (t.getName().equals(name)) {
 //                touristAttractions.remove(t);
@@ -63,15 +63,10 @@ public class TouristRepository {
         return citites;
     }
 
-    public List<String> getTags() {
-        List<String> tags = new ArrayList<>();
-        for (TouristAttraction t : touristAttractions) {
-            for (Tag tag : t.getTags()) {
-                tags.add(tag.getDisplayName());
-            }
-        }
-        return tags;
+    public List<Tag> getTags(TouristAttraction t) {
+        return t.getTags();
     }
+
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
         for (TouristAttraction attraction : touristAttractions) {

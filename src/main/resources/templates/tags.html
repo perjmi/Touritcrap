@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div th:replace="fragments/header :: header">...</div>
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/main.css}" rel="stylesheet">
@@ -11,7 +11,7 @@
 
 <ul>
     <li th:each="tag : ${tags}">
-        <span th:text="${tag.getDisplayName()}"></span>
+        <span th:text="${tag}"></span>
     </li>
 </ul>
 

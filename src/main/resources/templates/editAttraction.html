@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/main.css}" rel="stylesheet">
-    <title>Title</title>
+    <div th:replace="fragments/header :: header"></div>
+    <title>Edit attraction</title>
+
 </head>
 <body>
 <h1>Edit the tourist attraction: <span th:text="${attraction.name}"></span></h1>
@@ -31,7 +33,7 @@
     <br>
     <div>
         <span th:each="tag : ${availableTags}">
-            <input type="checkbox" th:id="${tag}" th:value="${tag}" th:name="selectedTags"/>
+            <input type="checkbox" th:field="*{tags}" th:value="${tag}" th:checked="${attraction.tags.contains(tag)}"/>
             <label th:for="${tag}" th:text="${tag}"></label><br>
         </span>
     </div>
