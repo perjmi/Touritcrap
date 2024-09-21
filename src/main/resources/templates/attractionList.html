@@ -4,17 +4,26 @@
     <meta charset="UTF-8">
     <link th:href="@{/main.css}" rel="stylesheet">
     <title>Attraction list</title>
-
 </head>
+
 <body>
-<div th:replace="~{fragments/header :: header}"></div>
+<div th:replace="fragments/header :: header">...</div>
 <h1>All Attractions:</h1>
+<form th:action="@{/attractions}" method="post">
+    <input type="hidden" name="valuta" value="EUR">
+    <button type="submit">EUR</button>
+</form>
+<form th:action="@{/attractions}" method="post">
+    <input type="hidden" name="valuta" value="DKK">
+    <button type="submit">DKK</button>
+</form>
 <table>
     <thead>
     <tr>
         <th>Name</th>
         <th>Description</th>
         <th>City</th>
+        <th>Price</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +31,7 @@
         <td th:text="${touristattraction.name}"></td>
         <td th:text="${touristattraction.description}"></td>
         <td th:text="${touristattraction.city}"></td>
+        <td th:text="${touristattraction.getPrice(valuta)}"></td>
         <td>
             <form th:action="@{ ${touristattraction.name} + '/edit'}" method="get">
                 <button type="submit">Edit</button>

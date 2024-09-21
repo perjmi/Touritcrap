@@ -1,7 +1,9 @@
 package com.amalie.thymeleaf.touristguide.model;
 
+import com.amalie.thymeleaf.touristguide.repository.CurrencyRates;
+import com.amalie.thymeleaf.touristguide.repository.CurrencyService;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class TouristAttraction {
@@ -9,6 +11,7 @@ public class TouristAttraction {
     private String description;
     private String city;
     private List<Tag> tags = new ArrayList<>();
+    private double prisDollar;
 
     public TouristAttraction() {
 
@@ -18,6 +21,18 @@ public class TouristAttraction {
         this.name = name;
         this.description = description;
         this.city = city;
+        this.prisDollar = 0;
+    }
+
+    public TouristAttraction(String name, String description, String city, double prisDollar) {
+        this.name = name;
+        this.description = description;
+        this.city = city;
+        this.prisDollar = prisDollar;
+    }
+
+    public double getPrisDollar() {
+        return prisDollar;
     }
 
     public String getCity() {
@@ -50,6 +65,16 @@ public class TouristAttraction {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public double getPrice(String currency) throws Exception{
+        CurrencyService currencyService = new CurrencyService();
+        CurrencyRates rates = currencyService.getRates();
+        if (currency.equals("EUR")) {
+            return rates.getEUR()*prisDollar;
+        } else {
+            return rates.getDKK()*prisDollar;
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.amalie.thymeleaf.touristguide.service.TouristService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,10 +22,20 @@ public class TouristController {
     }
 
     @GetMapping("/attractions")
-    public String getAttractions(Model model) {
+    public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) {
         List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
         model.addAttribute("attractions", touristAttractions);
+        model.addAttribute("valuta", valuta);
         return "attractionList";
+    }
+
+    @PostMapping("/attractions")
+    public String getValuta(@RequestParam String valuta, RedirectAttributes redirectAttributes) {
+        if (!valuta.equals("EUR")) {
+            valuta = "DKK";
+        }
+        redirectAttributes.addAttribute("valuta", valuta);
+        return "redirect:/attractions";
     }
 
     @GetMapping("/attractions/{name}/tags")

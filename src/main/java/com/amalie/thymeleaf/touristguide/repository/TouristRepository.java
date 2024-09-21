@@ -11,7 +11,7 @@ public class TouristRepository {
     final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
     public TouristRepository() {
-        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen");
+        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen", 100);
         t1.setTags(Arrays.asList(Tag.FORLYSTELSE, Tag.BALLON));
         TouristAttraction t2 = new TouristAttraction("Zoo", "A wildlife park, home to a wide variety of animals from around the world.", "Copenhagen");
         t2.setTags(Arrays.asList(Tag.NATUR, Tag.NATUR));
