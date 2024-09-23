@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/header :: header">...</div>
+
+<h1>About us:</h1>
+<ul>
+    <li><a href="mailto:amaliecolstrup@icloud.com">amaliecolstrup@icloud.com</a></li>
+    <br>
+    <li><a href="https://x.com/?lang=en&mx=2" target="_blank">Twitter</a></li>
+    <br>
+    <li><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+</ul>
+<form th:action="@{/attractions}" method="get">
+    <button type="submit">Go back</button>
+</form>
+</body>
+</html>
