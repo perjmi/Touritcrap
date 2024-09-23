@@ -19,8 +19,14 @@ public class TouristRepository {
     }
 
     //CREATE
-    public void saveAttraction(TouristAttraction t) {
+    public void saveAttraction(TouristAttraction t) throws Exception {
+        for (TouristAttraction to : touristAttractions) {
+            if (to.getName().equals(t.getName())) {
+                throw new Exception("Name already added");
+            }
+        }
         touristAttractions.add(t);
+
     }
 
     //READ
@@ -37,14 +43,6 @@ public class TouristRepository {
         return null;
     }
 
-    //    public void deleteAttraction(String name) {
-//        for (TouristAttraction t : touristAttractions) {
-//            if (t.getName().equals(name)) {
-//                touristAttractions.remove(t);
-//            }
-//        }
-//    }
-    //DELETE
     public void deleteAttraction(String name) {
         Iterator<TouristAttraction> iterator = touristAttractions.iterator(); //opretter iterator på touristattraction samling
         while (iterator.hasNext()) { //så længe der er flere elementer i samling
