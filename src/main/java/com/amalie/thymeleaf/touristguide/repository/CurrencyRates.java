@@ -1,8 +1,8 @@
 package com.amalie.thymeleaf.touristguide.repository;
 
     public class CurrencyRates {
-        private String table;
-        private Rate rates;
+        final private String table;
+        final private Rate rates;
 
         static final class Rate {
             private double DKK;
