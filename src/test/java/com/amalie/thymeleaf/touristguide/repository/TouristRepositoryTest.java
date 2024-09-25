@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 class TouristRepositoryTest {
 
     @Test
@@ -50,11 +53,18 @@ class TouristRepositoryTest {
         Assertions.assertEquals(updatedAttraction.getCity(), attraction.getCity());
     }
 
-    @Test
-    void addAttractionOnce() throws Exception {
-        TouristRepository touristRepository = new TouristRepository();
-        TouristAttraction touristAttraction = new TouristAttraction("Tivoli", "doomed too fail", "fail");
-        touristRepository.saveAttraction(touristAttraction);
-
-    }
+//    @Test
+//    void onlyOneNameCanBeAddedAttraction() throws Exception {
+//        TouristRepository touristRepository = new TouristRepository();
+//
+//        TouristAttraction touristAttraction = new TouristAttraction("Tivoli", "doomed too fail", "fail");
+//        touristRepository.saveAttraction(touristAttraction);
+//
+//        Exception exception = assertThrows(Exception.class, () -> {
+//            touristRepository.saveAttraction(touristAttraction);
+//        });
+//
+//        assertEquals("Name already added", exception.getMessage());
+//
+//    }
 }
