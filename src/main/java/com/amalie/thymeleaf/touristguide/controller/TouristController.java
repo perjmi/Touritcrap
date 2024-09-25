@@ -85,8 +85,4 @@ public class TouristController {
         return "redirect:/attractions";
     }
 
-    @GetMapping("/info")
-    public String getInfo() {
-        return "info";
-    }
 }
