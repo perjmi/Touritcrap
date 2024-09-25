@@ -9,7 +9,7 @@ public enum Tag {
     HISTORIE("Historie"),
     STRAND("Strand");
 
-    private String displayName;
+    final private String displayName;
 
     Tag(String displayName) {
         this.displayName = displayName;

@@ -41,7 +41,7 @@ public class TouristController {
         TouristAttraction t = touristService.getAttractionByName(name);
         model.addAttribute("attraction", t);
         model.addAttribute("tags", touristService.getTags(t));
-        return "tags";
+        return "showTags";
     }
 
     @GetMapping("/add")
