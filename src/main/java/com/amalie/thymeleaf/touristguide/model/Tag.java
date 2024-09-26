@@ -1,5 +1,5 @@
 package com.amalie.thymeleaf.touristguide.model;
-//hello
+
 public enum Tag {
     FORLYSTELSE("Forlystelse"),
     BALLON("Ballon"),
