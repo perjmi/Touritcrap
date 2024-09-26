@@ -7,13 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 class TouristRepositoryTest {
 
     @Test
-    void saveAttractionSize() throws Exception{
+    void saveAttractionSize() throws Exception {
         //Arrange-setup our test objects*
         TouristRepository touristRepository = new TouristRepository();
         TouristAttraction touristAttraction = new TouristAttraction("Attraction Name", "Attraction Description", "Attraction City");
@@ -21,7 +18,8 @@ class TouristRepositoryTest {
         //Act- do the actual calc or method*
         int expectedSize = 3;
         int actualSize = touristRepository.getAllAttractions().size();
-//Assert-check if actual val is equal to expected val*
+
+        //Assert-check if actual val is equal to expected val*
         Assertions.assertEquals(expectedSize, actualSize);
 
     }
