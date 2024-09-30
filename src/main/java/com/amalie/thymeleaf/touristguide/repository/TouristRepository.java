@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Repository
+@Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
-    final private List<TouristAttraction> touristAttractions = new ArrayList<>();
+    final private List<TouristAttraction> touristAttractions = new ArrayList<>(); //vi inistaniserer (ses ved new)
 
     public TouristRepository() {
         TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen", 100);
@@ -19,7 +19,7 @@ public class TouristRepository {
     }
 
     //CREATE
-    public void saveAttraction(TouristAttraction t) throws Exception {
+    public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
         for (TouristAttraction to : touristAttractions) {
             if (to.getName().equals(t.getName())) {
                 throw new Exception("Name already added");

@@ -16,19 +16,19 @@ public class TouristController {
     private final TouristService touristService;
 
     public TouristController() {
-        touristService = new TouristService();
+        touristService = new TouristService(); //vi inistaniserer
     }
 
     @GetMapping("/attractions")
-    public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) {
+    public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
         List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
-        model.addAttribute("attractions", touristAttractions);
+        model.addAttribute("attractions", touristAttractions); //sender med som argument
         model.addAttribute("valuta", valuta);
-        return "attractionList";
+        return "attractionList"; // alt ovenstående sendes videre til vores view
     }
 
     @PostMapping("/attractions")
-    public String getValuta(@RequestParam String valuta, RedirectAttributes redirectAttributes) {
+    public String getValuta(@RequestParam String valuta, RedirectAttributes redirectAttributes) { //request fordi vi skal sende en request med som typisk ligger i html
         if (!valuta.equals("EUR")) {
             valuta = "DKK";
         }
@@ -37,7 +37,7 @@ public class TouristController {
     }
 
     @GetMapping("/attractions/{name}/tags")
-    public String getAttractionTags(@PathVariable String name, Model model) {
+    public String getAttractionTags(@PathVariable String name, Model model) { //pathvariable fordi den kommer fra url path
         TouristAttraction t = touristService.getAttractionByName(name);
         model.addAttribute("attraction", t);
         model.addAttribute("tags", touristService.getTags(t));
@@ -76,7 +76,7 @@ public class TouristController {
     @PostMapping("/update")
     public String editAttraction(@ModelAttribute TouristAttraction touristAttraction) {
         touristService.updateAttraction(touristAttraction);
-        return "redirect:/attractions";
+        return "redirect:/attractions"; //redirect: sig til klienten bed om denne side
     }
 
     @PostMapping("/delete/{name}")
