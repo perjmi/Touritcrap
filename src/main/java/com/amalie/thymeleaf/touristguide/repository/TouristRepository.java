@@ -4,36 +4,74 @@ import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
+import java.sql.*;
 import java.util.*;
-//HEEEEEJ
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
-    final private List<TouristAttraction> touristAttractions = new ArrayList<>(); //vi inistaniserer (ses ved new)
+    private Connection con;
 
     public TouristRepository() {
-        TouristAttraction t1 = new TouristAttraction("Tivoli", "A amusement park", "Copenhagen", 100);
-        t1.setTags(Arrays.asList(Tag.FORLYSTELSE, Tag.BALLON));
-        TouristAttraction t2 = new TouristAttraction("Zoo", "A wildlife park, home to a wide variety of animals from around the world.", "Copenhagen");
-        t2.setTags(Arrays.asList(Tag.NATUR, Tag.NATUR));
-        Collections.addAll(touristAttractions, t1, t2);
+        try {
+            this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emp_dept", "amal", "amal");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
-        for (TouristAttraction to : touristAttractions) {
-            if (to.getName().equals(t.getName())) {
-                throw new Exception("Name already added");
-            }
+        try (Statement stmt = con.createStatement()) {
+            int rowcount = stmt.executeUpdate("INSERT INTO touristattraction(tname, description, pris, city_id) VALUES('Tivoli','A amusement park', 150,2)");
+            System.out.println();
+            System.out.printf("Success - %d - rows affected.\n", rowcount);
+        } catch (Exception err) {
+            System.out.println("An error has occurred.");
+            System.out.println("See full details below.");
+            err.printStackTrace();
         }
-        touristAttractions.add(t);
-
     }
 
     //READ
     public List<TouristAttraction> getAllAttractions() {
-        return touristAttractions;
+        List<TouristAttraction> attractions = new ArrayList<>();
+        try {
+            String SQL = "SELECT * FROM touristattraction";
+            // Opret Statement for at udføre forespørgslen
+            Statement stmt = con.createStatement();
+            // Udfør forespørgslen og få resultatet
+            ResultSet rs = stmt.executeQuery(SQL);
+            while (rs.next()) {
+                TouristAttraction t = new TouristAttraction(rs.getString("tname"), rs.getString("description"),getCityNameById(rs.getInt("city_id")), rs.getDouble("pris"));
+                attractions.add(t);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return attractions;
     }
+
+    public String getCityNameById(int cityId) {
+        String cityName = null;
+        try  {
+            String SQL = "SELECT city_name FROM city WHERE city_id = ?";
+
+            PreparedStatement pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, cityId);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                cityName = rs.getString("city_name");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cityName;
+    }
+
 
     public TouristAttraction getAttractionByName(String name) {
         for (TouristAttraction t : touristAttractions) {
@@ -68,12 +106,11 @@ public class TouristRepository {
 
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
-        for (TouristAttraction attraction : touristAttractions) {
-            if (attraction.getName().equals(updatedAttraction.getName())) {
-                attraction.setDescription(updatedAttraction.getDescription());
-                attraction.setCity(updatedAttraction.getCity());
-                attraction.setTags(updatedAttraction.getTags());
-            }
+        TouristAttraction existingAttraction = getAttractionByName(updatedAttraction.getName());
+        if (existingAttraction != null) {
+            existingAttraction.setDescription(updatedAttraction.getDescription());
+            existingAttraction.setCity(updatedAttraction.getCity());
+            existingAttraction.setTags(updatedAttraction.getTags());
         }
     }
 }
