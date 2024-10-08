@@ -2,6 +2,7 @@ package com.amalie.thymeleaf.touristguide.repository;
 
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -20,16 +21,27 @@ public class TouristRepository {
     final private List<TouristAttraction> touristAttractions = new ArrayList<>(); //vi inistaniserer (ses ved new)
 
     public TouristRepository() {
-        try {
-            this.con = DriverManager.getConnection(dbUrl, username, password);
+
+    }
+
+    public void getConnection() throws Exception {
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
+
+            // Hvis forbindelsen lykkes, kan du arbejde videre med databasen her
+            System.out.println("Forbindelse til databasen er oprettet med succes!");
+
         } catch (SQLException e) {
+            // Håndter SQL exceptions her
+            System.out.println("Kunne ikke oprette forbindelse til databasen");
             e.printStackTrace();
         }
+
+        System.out.println(dbUrl + " " + username + " " + password);
     }
 
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
-        try  {
+        try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
             String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
 
             PreparedStatement statement = con.prepareStatement(sqlString);
@@ -54,7 +66,7 @@ public class TouristRepository {
 
     public String getCityNameById(int cityId) {
         String cityName = null;
-        try  {
+        try {
             String SQL = "SELECT city_name FROM city WHERE city_id = ?";
 
             PreparedStatement pstmt = con.prepareStatement(SQL);
