@@ -41,12 +41,13 @@ public class TouristService {
     }
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
-        TouristAttraction existingAttraction = touristRepository.getAttractionByName(updatedAttraction.getName());
-        if (existingAttraction != null) {
-            existingAttraction.setDescription(updatedAttraction.getDescription());
-            existingAttraction.setCity(updatedAttraction.getCity());
-            existingAttraction.setTags(updatedAttraction.getTags());
-        }
+        touristRepository.updateAttraction(updatedAttraction);
+//        TouristAttraction existingAttraction = touristRepository.getAttractionByName(updatedAttraction.getName());
+//        if (existingAttraction != null) {
+//            existingAttraction.setDescription(updatedAttraction.getDescription());
+//            existingAttraction.setCity(updatedAttraction.getCity());
+//            existingAttraction.setTags(updatedAttraction.getTags());
+//        }
     }
 
 }

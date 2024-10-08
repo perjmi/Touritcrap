@@ -1,5 +1,4 @@
 package com.amalie.thymeleaf.touristguide.model;
-
 import com.amalie.thymeleaf.touristguide.repository.CurrencyRates;
 import com.amalie.thymeleaf.touristguide.repository.CurrencyService;
 

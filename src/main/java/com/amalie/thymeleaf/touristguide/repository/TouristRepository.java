@@ -5,6 +5,7 @@ import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+//HEEEEEJ
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
