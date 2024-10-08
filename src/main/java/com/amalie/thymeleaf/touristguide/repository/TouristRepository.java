@@ -2,6 +2,7 @@ package com.amalie.thymeleaf.touristguide.repository;
 
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -9,11 +10,18 @@ import java.util.*;
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
+    @Value("${spring.datasource.username}")
+    private String username;
+    @Value("${spring.datasource.password}")
+    private String password;
     private Connection con;
+    final private List<TouristAttraction> touristAttractions = new ArrayList<>(); //vi inistaniserer (ses ved new)
 
     public TouristRepository() {
         try {
-            this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/emp_dept", "amal", "amal");
+            this.con = DriverManager.getConnection(dbUrl, username, password);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -21,34 +29,27 @@ public class TouristRepository {
 
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
-        try (Statement stmt = con.createStatement()) {
-            int rowcount = stmt.executeUpdate("INSERT INTO touristattraction(tname, description, pris, city_id) VALUES('Tivoli','A amusement park', 150,2)");
-            System.out.println();
-            System.out.printf("Success - %d - rows affected.\n", rowcount);
+        try  {
+            String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
+
+            PreparedStatement statement = con.prepareStatement(sqlString);
+            statement.setString(1, t.getName());
+            statement.setString(2, t.getDescription());
+            statement.setDouble(3, t.getPrice("USD"));
+            statement.setInt(4, t.getCity().getId());
+            statement.executeUpdate();
         } catch (Exception err) {
             System.out.println("An error has occurred.");
             System.out.println("See full details below.");
             err.printStackTrace();
+
         }
     }
 
+
     //READ
     public List<TouristAttraction> getAllAttractions() {
-        List<TouristAttraction> attractions = new ArrayList<>();
-        try {
-            String SQL = "SELECT * FROM touristattraction";
-            // Opret Statement for at udføre forespørgslen
-            Statement stmt = con.createStatement();
-            // Udfør forespørgslen og få resultatet
-            ResultSet rs = stmt.executeQuery(SQL);
-            while (rs.next()) {
-                TouristAttraction t = new TouristAttraction(rs.getString("tname"), rs.getString("description"),getCityNameById(rs.getInt("city_id")), rs.getDouble("pris"));
-                attractions.add(t);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return attractions;
+        return touristAttractions;
     }
 
     public String getCityNameById(int cityId) {
