@@ -24,9 +24,10 @@ public class TouristRepository {
 
     }
 
+    @PostConstruct
     public void getConnection() throws Exception {
-        try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
-
+        try {
+            this.con = DriverManager.getConnection(this.dbUrl, this.username, this.password);
             // Hvis forbindelsen lykkes, kan du arbejde videre med databasen her
             System.out.println("Forbindelse til databasen er oprettet med succes!");
 
@@ -41,7 +42,7 @@ public class TouristRepository {
 
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
-        try (Connection connection = DriverManager.getConnection(dbUrl, username, password)) {
+        try  {
             String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
 
             PreparedStatement statement = con.prepareStatement(sqlString);

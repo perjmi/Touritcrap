@@ -49,6 +49,11 @@
             <artifactId>gson</artifactId>
             <version>2.10.1</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.32</version> <!-- Sørg for at bruge den seneste version -->
+        </dependency>
     </dependencies>
 
     <build>
