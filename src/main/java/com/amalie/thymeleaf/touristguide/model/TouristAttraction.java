@@ -16,19 +16,20 @@ public class TouristAttraction {
 
     }
 
+
     public TouristAttraction(String name, String description, City city) {
         this.name = name;
         this.description = description;
-        this.city = city;
         this.prisDollar = 0;
+        this.city = city;
     }
-
-    public TouristAttraction(String name, String description, City city, double prisDollar) {
+    public TouristAttraction(String name, String description, double prisDollar, City city) {
         this.name = name;
         this.description = description;
         this.city = city;
         this.prisDollar = prisDollar;
     }
+
 
     public double getPrisDollar() {
         return prisDollar;
@@ -82,8 +83,12 @@ public class TouristAttraction {
 
     @Override
     public String toString() {
-        return
-                name + '\'' +
-                        ", " + description;
+        return "TouristAttraction{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", city=" + city +
+                ", tags=" + tags +
+                ", prisDollar=" + prisDollar +
+                '}';
     }
 }

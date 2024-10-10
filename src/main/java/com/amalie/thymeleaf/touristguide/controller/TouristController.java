@@ -1,5 +1,6 @@
 package com.amalie.thymeleaf.touristguide.controller;
 
+import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import com.amalie.thymeleaf.touristguide.service.TouristService;
@@ -57,6 +58,9 @@ public class TouristController {
 
     @PostMapping("/save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) throws Exception{
+        System.out.println(touristAttraction);
+        System.out.println(touristAttraction.getCity());
+
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";

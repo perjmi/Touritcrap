@@ -8,6 +8,10 @@ public class City {
         this.name = name;
         this.id = id;
     }
+    public City (int id) {
+        this.id = 1;
+        this.name = "Roskilde";
+    }
 
     public String getName() {
         return name;

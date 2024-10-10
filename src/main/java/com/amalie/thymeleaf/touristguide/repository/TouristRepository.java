@@ -1,5 +1,6 @@
 package com.amalie.thymeleaf.touristguide.repository;
 
+import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import jakarta.annotation.PostConstruct;
@@ -17,45 +18,36 @@ public class TouristRepository {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
-    private Connection con;
-    final private List<TouristAttraction> touristAttractions = new ArrayList<>(); //vi inistaniserer (ses ved new)
+    //    private Connection con;
+    final private List<TouristAttraction> touristAttractions = new ArrayList<>();
 
     public TouristRepository() {
 
     }
 
-    @PostConstruct
-    public void getConnection() throws Exception {
-        try {
-            this.con = DriverManager.getConnection(this.dbUrl, this.username, this.password);
-            // Hvis forbindelsen lykkes, kan du arbejde videre med databasen her
-            System.out.println("Forbindelse til databasen er oprettet med succes!");
-
-        } catch (SQLException e) {
-            // Håndter SQL exceptions her
-            System.out.println("Kunne ikke oprette forbindelse til databasen");
-            e.printStackTrace();
-        }
-
-        System.out.println(dbUrl + " " + username + " " + password);
-    }
 
     //CREATE
-    public void saveAttraction(TouristAttraction t) throws Exception { //paramettr inde i parantesen, parametreliste
-        try  {
-            String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
+    public void saveAttraction(TouristAttraction t) throws Exception {
+
+        String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+            System.out.println("Forbindelse til databasen er oprettet med succes!");
 
             PreparedStatement statement = con.prepareStatement(sqlString);
             statement.setString(1, t.getName());
             statement.setString(2, t.getDescription());
-            statement.setDouble(3, t.getPrice("USD"));
+            statement.setDouble(3, t.getPrisDollar());
             statement.setInt(4, t.getCity().getId());
+            System.out.println("SQL query: " + sqlString);
+
             statement.executeUpdate();
-        } catch (Exception err) {
+
+        } catch (SQLException err) {
             System.out.println("An error has occurred.");
             System.out.println("See full details below.");
+            System.out.println(this.dbUrl + " " + this.username + " " + this.password);
             err.printStackTrace();
-
         }
     }
 
@@ -63,27 +55,25 @@ public class TouristRepository {
     //READ
     public List<TouristAttraction> getAllAttractions() {
         return touristAttractions;
-    }
-
-    public String getCityNameById(int cityId) {
-        String cityName = null;
-        try {
-            String SQL = "SELECT city_name FROM city WHERE city_id = ?";
-
-            PreparedStatement pstmt = con.prepareStatement(SQL);
-            pstmt.setInt(1, cityId);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                cityName = rs.getString("city_name");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return cityName;
+//        List<TouristAttraction> attractions = new ArrayList<>();
+//        String sqlString = "SELECT * FROM touristattraction";
+//        try (
+//                Connection con = DriverManager.getConnection(this.dbUrl, this.username, this.password);
+//                Statement statement = con.createStatement()) {
+//            ResultSet resultSet = statement.executeQuery(sqlString);
+//
+//            while (resultSet.next()) {
+//                String tname = resultSet.getString("tname");
+//                String description = resultSet.getString("description");
+//                double pris = resultSet.getDouble("pris");
+//                int cityid = resultSet.getInt("city_id");
+//                attractions.add(new TouristAttraction(tname, description, pris, cityid));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return attractions;
     }
 
 
@@ -105,14 +95,41 @@ public class TouristRepository {
                 break;
             }
         }
+
+//        try (Connection con = DriverManager.getConnection(this.dbUrl, this.username, this.password);) {
+//            String sqlString = "DELETE FROM touristattraction WHERE tname = ?";
+//            PreparedStatement statement = con.prepareStatement(sqlString);
+//            statement.setString(1, name);
+//            statement.executeUpdate();
+//        } catch (SQLException e) {
+//            // better error handling is required
+//            e.printStackTrace();
+//        }
     }
 
 
-    public List<String> getCities() {
-        List<String> citites = new ArrayList<>();
-        Collections.addAll(citites, "Roskilde", "Copenhagen", "Herning", "Holstebro", "Aarhus");
-        return citites;
+    public List<City> getCities() {
+        List<City> cities = new ArrayList<>();
+        String sqlString = "SELECT * FROM city";
+        try {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+            System.out.println("Forbindelse til databasen er oprettet med succes!");
+
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlString);
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int cityid = resultSet.getInt("city_id");
+                cities.add(new City(name, cityid));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cities;
     }
+
 
     public List<Tag> getTags(TouristAttraction t) {
         return t.getTags();
@@ -126,5 +143,18 @@ public class TouristRepository {
             existingAttraction.setCity(updatedAttraction.getCity());
             existingAttraction.setTags(updatedAttraction.getTags());
         }
+
+//        try (Connection con = DriverManager.getConnection(this.dbUrl, this.username, this.password);) {
+//             String sqlString = "UPDATE touristattraction SET SAL = SAL + ? WHERE EMPNO = ?";
+//             PreparedStatement statement = con.prepareStatement(sqlString);
+//             statement.setInt(1, amount);
+//
+//             statement.executeUpdate();
+//        } catch (SQLException e) {
+//        // better error handling is required
+//        e.printStackTrace();
+//
+//    }
+
     }
 }

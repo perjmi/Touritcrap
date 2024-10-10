@@ -1,10 +1,12 @@
 package com.amalie.thymeleaf.touristguide.service;
 
+import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import com.amalie.thymeleaf.touristguide.repository.TouristRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TouristService {
@@ -32,7 +34,7 @@ public class TouristService {
         touristRepository.deleteAttraction(name);
     }
 
-    public List<String> getCities() {
+    public List<City> getCities() {
         return touristRepository.getCities();
     }
     
