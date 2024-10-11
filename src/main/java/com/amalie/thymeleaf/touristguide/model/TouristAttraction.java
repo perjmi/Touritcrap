@@ -8,7 +8,7 @@ import java.util.List;
 public class TouristAttraction {
     private String name;
     private String description;
-    private City city;
+    private int cityId;
     private List<Tag> tags = new ArrayList<>();
     private double prisDollar;
 
@@ -17,16 +17,16 @@ public class TouristAttraction {
     }
 
 
-    public TouristAttraction(String name, String description, City city) {
+    public TouristAttraction(String name, String description, int cityId) {
         this.name = name;
         this.description = description;
         this.prisDollar = 0;
-        this.city = city;
+        this.cityId = cityId;
     }
-    public TouristAttraction(String name, String description, double prisDollar, City city) {
+    public TouristAttraction(String name, String description, double prisDollar, int cityId) {
         this.name = name;
         this.description = description;
-        this.city = city;
+        this.cityId = cityId;
         this.prisDollar = prisDollar;
     }
 
@@ -35,12 +35,12 @@ public class TouristAttraction {
         return prisDollar;
     }
 
-    public City getCity() {
-        return city;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCity(City city) {
-        this.city = city;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public void setPrisDollar(double prisDollar) {
@@ -86,7 +86,7 @@ public class TouristAttraction {
         return "TouristAttraction{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", city=" + city +
+                ", cityId=" + cityId +
                 ", tags=" + tags +
                 ", prisDollar=" + prisDollar +
                 '}';

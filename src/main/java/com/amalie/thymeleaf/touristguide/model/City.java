@@ -10,7 +10,7 @@ public class City {
     }
     public City (int id) {
         this.id = id;
-        this.name = "Ingen steder";
+
     }
     public City() {
         this.id = 1;

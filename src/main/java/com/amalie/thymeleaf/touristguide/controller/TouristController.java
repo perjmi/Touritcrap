@@ -48,7 +48,7 @@ public class TouristController {
     @GetMapping("/add")
     public String addAttraction(Model model) {
         TouristAttraction t = new TouristAttraction();
-        t.setCity(new City());
+        t.setCityId(5);
         model.addAttribute("attraction", t);
         model.addAttribute("availableTags", Arrays.asList(Tag.values()));
         model.addAttribute("name", t.getName());
@@ -60,7 +60,7 @@ public class TouristController {
     @PostMapping("/save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) throws Exception{
         System.out.println(touristAttraction);
-        System.out.println(touristAttraction.getCity());
+        System.out.println(touristAttraction.getCityId());
 
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);

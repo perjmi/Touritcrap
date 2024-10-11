@@ -39,7 +39,7 @@ public class TouristRepository {
             statement.setString(1, t.getName());
             statement.setString(2, t.getDescription());
             statement.setDouble(3, t.getPrisDollar());
-            statement.setInt(4, t.getCity().getId());
+            statement.setInt(4, t.getCityId());
             System.out.println("SQL query: " + sqlString);
 
             statement.executeUpdate();
@@ -139,7 +139,7 @@ public class TouristRepository {
         TouristAttraction existingAttraction = getAttractionByName(updatedAttraction.getName());
         if (existingAttraction != null) {
             existingAttraction.setDescription(updatedAttraction.getDescription());
-            existingAttraction.setCity(updatedAttraction.getCity());
+            existingAttraction.setCityId(updatedAttraction.getCityId());
             existingAttraction.setTags(updatedAttraction.getTags());
         }
 
