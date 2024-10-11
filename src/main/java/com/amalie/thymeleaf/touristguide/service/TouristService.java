@@ -18,6 +18,7 @@ public class TouristService {
         touristRepository = new TouristRepository();
     }
 
+
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception {
         touristRepository.saveAttraction(t);

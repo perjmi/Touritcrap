@@ -33,4 +33,4 @@ INSERT INTO touristattraction(tname, description, pris, city_id)
 VALUES ('Tivoli', 'A amusement park', 150,2),
 ('Zoo', 'A wildlife park, home to a wide variety of animals from around the world.', 170, 3);
 
-select * from city;
+select * from touristattraction;

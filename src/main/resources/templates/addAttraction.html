@@ -23,11 +23,12 @@
            th:field="*{description}"/>
     <br>
     <label for="city">City:</label>
-    <select id="city" th:field="*{city}">
+    <select id="city" th:field="*{city.id}">
         <th:block th:each="by : ${cities}">
-            <option th:value="${by}" th:text="${by.name}"></option>
+            <option th:value="${by.id}" th:text="${by.name}"></option>
         </th:block>
     </select>
+
     <br>
     <label>Tags:</label>
     <br>
