@@ -111,11 +111,9 @@ public class TouristRepository {
     public List<City> getCities() {
         List<City> cities = new ArrayList<>();
         String sqlString = "SELECT * FROM city";
-        try {
-            Connection con = DriverManager.getConnection(dbUrl, username, password);
-            System.out.println("Forbindelse til databasen er oprettet med succes!");
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
 
-            Statement statement = con.createStatement();
+            Statement statement = con.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sqlString);
 
             while (resultSet.next()) {

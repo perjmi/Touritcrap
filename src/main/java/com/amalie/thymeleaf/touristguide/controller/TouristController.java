@@ -52,7 +52,7 @@ public class TouristController {
         model.addAttribute("availableTags", Arrays.asList(Tag.values()));
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
-        model.addAttribute("city", touristService.getCities());
+        model.addAttribute("cities", touristService.getCities());
         return "addAttraction";
     }
 
