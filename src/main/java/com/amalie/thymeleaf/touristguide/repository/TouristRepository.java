@@ -12,11 +12,13 @@ import java.util.*;
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
-    @Value("${DEV_DATABASE_URL}")
+    @Value("${spring.datasource.url}")
     private String dbUrl;
-    @Value("${DEV_USERNAME}")
+
+    @Value("${spring.datasource.username}")
     private String username;
-    @Value("${DEV_PASSWORD}")
+
+    @Value("${spring.datasource.password}")
     private String password;
     //    private Connection con;
     final private List<TouristAttraction> touristAttractions = new ArrayList<>();
@@ -29,7 +31,7 @@ public class TouristRepository {
     public void saveAttraction(TouristAttraction t) throws Exception {
 
         String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
-        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
 
 
              PreparedStatement statement = con.prepareStatement(sqlString)) {

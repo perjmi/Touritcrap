@@ -22,11 +22,11 @@
            th:value="${attraction.description}"
            th:field="*{description}"/>
     <br>
-    <!--<label for="city" id="city">City:</label>-->
-    <select th:name="selectedCity" id="city" th:field="*{city}">
-    <th:block th:each="by : ${city}">
-        <option th:value="${by.id}" th:text="${by.name}"></option>
-    </th:block>
+    <label for="city">City:</label>
+    <select id="city" th:field="*{city}">
+        <th:block th:each="by : ${city}">
+            <option th:value="${by.id}" th:text="${by.name}"></option>
+        </th:block>
     </select>
     <br>
     <label>Tags:</label>

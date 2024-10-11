@@ -4,12 +4,14 @@ import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import com.amalie.thymeleaf.touristguide.repository.TouristRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class TouristService {
+    @Autowired
     TouristRepository touristRepository;
 
     public TouristService() {
