@@ -3,7 +3,7 @@ package com.amalie.thymeleaf.touristguide.repository;
 import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
-import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +12,11 @@ import java.util.*;
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
-    @Value("${spring.datasource.url}")
+    @Value("${DEV_DATABASE_URL}")
     private String dbUrl;
-    @Value("${spring.datasource.username}")
+    @Value("${DEV_USERNAME}")
     private String username;
-    @Value("${spring.datasource.password}")
+    @Value("${DEV_PASSWORD}")
     private String password;
     //    private Connection con;
     final private List<TouristAttraction> touristAttractions = new ArrayList<>();
@@ -25,16 +25,14 @@ public class TouristRepository {
 
     }
 
-
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception {
 
         String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
-        try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
-            System.out.println("Forbindelse til databasen er oprettet med succes!");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
 
-            PreparedStatement statement = con.prepareStatement(sqlString);
+
+             PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setString(1, t.getName());
             statement.setString(2, t.getDescription());
             statement.setDouble(3, t.getPrisDollar());
@@ -46,7 +44,7 @@ public class TouristRepository {
         } catch (SQLException err) {
             System.out.println("An error has occurred.");
             System.out.println("See full details below.");
-            System.out.println(this.dbUrl + " " + this.username + " " + this.password);
+            System.out.println(dbUrl + " " + username + " " + password);
             err.printStackTrace();
         }
     }
@@ -112,7 +110,7 @@ public class TouristRepository {
         List<City> cities = new ArrayList<>();
         String sqlString = "SELECT * FROM city";
         try {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+            Connection con = DriverManager.getConnection(dbUrl, username, password);
             System.out.println("Forbindelse til databasen er oprettet med succes!");
 
             Statement statement = con.createStatement();

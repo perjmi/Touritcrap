@@ -1,8 +1,8 @@
 package com.amalie.thymeleaf.touristguide;
 
-import com.amalie.thymeleaf.touristguide.model.City;
-import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
-import com.amalie.thymeleaf.touristguide.repository.TouristRepository;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
