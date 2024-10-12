@@ -24,6 +24,7 @@ public class TouristController {
     public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
         List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
         model.addAttribute("attractions", touristAttractions); //sender med som argument
+        model.addAttribute("cities", touristService.getCities());
         model.addAttribute("valuta", valuta);
         return "attractionList"; // alt ovenstående sendes videre til vores view
     }
@@ -59,9 +60,6 @@ public class TouristController {
 
     @PostMapping("/save")
     public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) throws Exception{
-        System.out.println(touristAttraction);
-        System.out.println(touristAttraction.getCityId());
-
         touristService.saveAttraction(touristAttraction);
         model.addAttribute("attraction", touristAttraction);
         return "redirect:/attractions";
@@ -72,7 +70,7 @@ public class TouristController {
     public String editAttraction(@PathVariable String name, Model model) {
         TouristAttraction t = touristService.getAttractionByName(name);
         model.addAttribute("attraction", t);
-        model.addAttribute("city", touristService.getCities());
+        model.addAttribute("cities", touristService.getCities());
         model.addAttribute("description", t.getDescription());
         model.addAttribute("availableTags", Tag.values());
         return "editAttraction";
