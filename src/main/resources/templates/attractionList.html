@@ -31,7 +31,7 @@
         <td th:text="${touristattraction.name}"></td>
         <td th:text="${touristattraction.description}"></td>
         <td th:each="city : ${cities}"
-            th:if="${city.id} == ${touristattraction.cityId}"
+            th:if="${city.cityId} == ${touristattraction.cityId}"
             th:text="${city.name}"></td>
         <td th:text="${touristattraction.getPrice(valuta)}"></td>
         <td>

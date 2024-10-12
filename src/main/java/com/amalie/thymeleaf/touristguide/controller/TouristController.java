@@ -51,7 +51,7 @@ public class TouristController {
         TouristAttraction t = new TouristAttraction();
         t.setCityId(5);
         model.addAttribute("attraction", t);
-        model.addAttribute("availableTags", Arrays.asList(Tag.values()));
+        model.addAttribute("availableTags", touristService.getCities());
         model.addAttribute("name", t.getName());
         model.addAttribute("description", t.getDescription());
         model.addAttribute("cities", touristService.getCities());
@@ -72,7 +72,7 @@ public class TouristController {
         model.addAttribute("attraction", t);
         model.addAttribute("cities", touristService.getCities());
         model.addAttribute("description", t.getDescription());
-        model.addAttribute("availableTags", Tag.values());
+        model.addAttribute("availableTags", touristService.getAvaliableTags());
         return "editAttraction";
     }
 

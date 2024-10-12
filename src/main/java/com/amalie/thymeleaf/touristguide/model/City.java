@@ -2,19 +2,11 @@ package com.amalie.thymeleaf.touristguide.model;
 
 public class City {
     private String name;
-    private int id;
+    private int cityId;
 
-    public City(String name, int id) {
+    public City(String name, int cityId) {
         this.name = name;
-        this.id = id;
-    }
-    public City (int id) {
-        this.id = id;
-
-    }
-    public City() {
-        this.id = 1;
-        this.name = "Roskilde";
+        this.cityId = cityId;
     }
 
     public String getName() {
@@ -25,19 +17,18 @@ public class City {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
-
     @Override
     public String toString() {
         return "City{" +
                 "name='" + name + '\'' +
-                ", id=" + id +
+                ", cityId=" + cityId +
                 '}';
     }
 }

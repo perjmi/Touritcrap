@@ -26,7 +26,7 @@
     <label for="city">City:</label>
     <select id="city" th:field="*{cityId}">
         <th:block th:each="by : ${cities}">
-            <option th:value="${by.id}" th:text="${by.name}"></option>
+            <option th:value="${by.cityId}" th:text="${by.name}"></option>
         </th:block>
     </select>
     <br>

@@ -31,7 +31,7 @@ public class TouristRepository {
     //CREATE
     public void saveAttraction(TouristAttraction t) throws Exception {
 
-        String sqlString = "INSERT INTO touristattraction(tname, description, pris, city_id) VALUES(?,?,?,?)";
+        String sqlString = "INSERT INTO touristattraction(name, description, prisDollar, cityId) VALUES(?,?,?,?)";
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
 
 
@@ -65,7 +65,7 @@ public class TouristRepository {
                 String tname = resultSet.getString("tname");
                 String description = resultSet.getString("description");
                 double pris = resultSet.getDouble("pris");
-                int cityid = resultSet.getInt("city_id");
+                int cityid = resultSet.getInt("cityId");
                 attractions.add(new TouristAttraction(tname, description, pris, cityid));
             }
         } catch (SQLException e) {
@@ -77,7 +77,7 @@ public class TouristRepository {
 
 
     public TouristAttraction getAttractionByName(String name) {
-        String sqlString = "SELECT t.tname, t.description, t.pris, c.city_id, c.name FROM touristattraction t JOIN city c ON t.city_id = c.city_id WHERE t.tname = ?";
+        String sqlString = "SELECT t.tname, t.description, t.pris, c.cityId, c.name FROM touristattraction t JOIN city c ON t.cityId = c.cityId WHERE t.tname = ?";
         TouristAttraction touristAttraction = null;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
@@ -92,7 +92,7 @@ public class TouristRepository {
                 String attractionName = resultSet.getString("tname");
                 String description = resultSet.getString("description");
                 double pris = resultSet.getDouble("pris");
-                int cityId = resultSet.getInt("city_id");
+                int cityId = resultSet.getInt("cityId");
 
                 touristAttraction = new TouristAttraction(attractionName, description, pris, cityId);
             }
@@ -103,7 +103,6 @@ public class TouristRepository {
 
         return touristAttraction;
     }
-
 
 
     public void deleteAttraction(String name) {
@@ -129,7 +128,7 @@ public class TouristRepository {
 
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
-                int cityid = resultSet.getInt("city_id");
+                int cityid = resultSet.getInt("cityId");
                 cities.add(new City(name, cityid));
             }
 
@@ -139,14 +138,50 @@ public class TouristRepository {
         return cities;
     }
 
+    public List<Tag> getAvaliableTags() {
+        List<Tag> avaliableTags = new ArrayList<>();
+        String sqlString = "SELECT * FROM tag";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+
+             Statement statement = con.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(sqlString);
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("tag_name");
+                int tagId = resultSet.getInt("tag_id");
+                avaliableTags.add(new Tag(name, tagId));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return avaliableTags;
+    }
+
 
     public List<Tag> getTags(TouristAttraction t) {
-        return t.getTags();
+        List<Tag> attractionTags = new ArrayList<>();
+        String sqlString = "SELECT touristattraction_tag.tag_id, tag.tag_name FROM touristattraction_tag INNER JOIN tags ON touristattraction_tag.tag_id = tags.tag_id AND touristattraction_tag.tourist_id = ?";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+             PreparedStatement statement = con.prepareStatement(sqlString)) {
+            statement.setInt(1, t.getTourist_id());
+            ResultSet resultSet = statement.executeQuery(sqlString);
+
+            while (resultSet.next()) {
+                String tagName = resultSet.getString("tag_name");
+                int tagId = resultSet.getInt("tag_id");
+                attractionTags.add(new Tag(tagName, tagId));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return attractionTags;
     }
 
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
-        String sqlString = "UPDATE touristattraction SET description = ?, pris = ?, city_id = ? WHERE tname = ?";
+        String sqlString = "UPDATE touristattraction SET description = ?, pris = ?, cityId = ? WHERE tname = ?";
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
              PreparedStatement statement = con.prepareStatement(sqlString)) {

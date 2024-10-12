@@ -1,22 +1,36 @@
 package com.amalie.thymeleaf.touristguide.model;
+
 //he
-public enum Tag {
-    FORLYSTELSE("Forlystelse"),
-    BALLON("Ballon"),
-    SLIK("Slik"),
-    MUSEUM("Museum"),
-    NATUR("Natur"),
-    HISTORIE("Historie"),
-    STRAND("Strand");
+public class Tag {
+    private String name;
+    private int id;
 
-    final private String displayName;
-
-    Tag(String displayName) {
-        this.displayName = displayName;
+    public Tag(String name, int id) {
+        this.name = name;
+        this.id = id;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

@@ -40,6 +40,9 @@ public class TouristService {
     public List<City> getCities() {
         return touristRepository.getCities();
     }
+    public List<Tag> getAvaliableTags() {
+        return touristRepository.getAvaliableTags();
+    }
     
     public List<Tag> getTags(TouristAttraction t) {
         return touristRepository.getTags(t);

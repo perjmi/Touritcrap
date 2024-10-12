@@ -7,10 +7,10 @@ import java.util.List;
 
 public class TouristAttraction {
     private String name;
+    private int tourist_id;
     private String description;
-    private int cityId;
-    private List<Tag> tags = new ArrayList<>();
     private double prisDollar;
+    private int cityId;
 
     public TouristAttraction() {
 
@@ -30,6 +30,13 @@ public class TouristAttraction {
         this.prisDollar = prisDollar;
     }
 
+    public int getTourist_id() {
+        return tourist_id;
+    }
+
+    public void setTourist_id(int tourist_id) {
+        this.tourist_id = tourist_id;
+    }
 
     public double getPrisDollar() {
         return prisDollar;
@@ -63,13 +70,6 @@ public class TouristAttraction {
         this.description = description;
     }
 
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 
     public double getPrice(String currency) throws Exception{
         CurrencyService currencyService = new CurrencyService();
@@ -85,9 +85,9 @@ public class TouristAttraction {
     public String toString() {
         return "TouristAttraction{" +
                 "name='" + name + '\'' +
+                ", tourist_id=" + tourist_id +
                 ", description='" + description + '\'' +
                 ", cityId=" + cityId +
-                ", tags=" + tags +
                 ", prisDollar=" + prisDollar +
                 '}';
     }
