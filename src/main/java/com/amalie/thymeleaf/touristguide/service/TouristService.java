@@ -3,6 +3,7 @@ package com.amalie.thymeleaf.touristguide.service;
 import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
+import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import com.amalie.thymeleaf.touristguide.repository.TouristRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,6 @@ public class TouristService {
         touristRepository = new TouristRepository();
     }
 
-
-    //CREATE
-    public void saveAttraction(TouristAttraction t) throws Exception {
-        touristRepository.saveAttraction(t);
-    }
 
     //READ
     public List<TouristAttraction> getAllAttractions() {
@@ -50,12 +46,9 @@ public class TouristService {
 
     public void updateAttraction(TouristAttraction updatedAttraction) {
         touristRepository.updateAttraction(updatedAttraction);
-//        TouristAttraction existingAttraction = touristRepository.getAttractionByName(updatedAttraction.getName());
-//        if (existingAttraction != null) {
-//            existingAttraction.setDescription(updatedAttraction.getDescription());
-//            existingAttraction.setCity(updatedAttraction.getCity());
-//            existingAttraction.setTags(updatedAttraction.getTags());
-//        }
+    }
+    public void saveDTOAttraction(TouristAttractionTagDTO t) {
+        touristRepository.saveDTOAttraction(t);
     }
 
 }

@@ -3,11 +3,13 @@ package com.amalie.thymeleaf.touristguide.controller;
 import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
+import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import com.amalie.thymeleaf.touristguide.service.TouristService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class TouristController {
         model.addAttribute("attractions", touristAttractions); //sender med som argument
         model.addAttribute("cities", touristService.getCities());
         model.addAttribute("valuta", valuta);
-        return "attractionList"; // alt ovenstående sendes videre til vores view
+        return "attractionList";
     }
 
     @PostMapping("/attractions")
@@ -48,22 +50,17 @@ public class TouristController {
 
     @GetMapping("/add")
     public String addAttraction(Model model) {
-        TouristAttraction t = new TouristAttraction();
-        t.setCityId(5);
-        model.addAttribute("attraction", t);
-        model.addAttribute("availableTags", touristService.getCities());
-        model.addAttribute("name", t.getName());
-        model.addAttribute("description", t.getDescription());
+        TouristAttractionTagDTO tagDTO = new TouristAttractionTagDTO();
+        model.addAttribute("dto", tagDTO);
+        model.addAttribute("availableTags", touristService.getAvaliableTags());
         model.addAttribute("cities", touristService.getCities());
         return "addAttraction";
     }
 
     @PostMapping("/save")
-    public String addAttraction(@ModelAttribute TouristAttraction touristAttraction, Model model) throws Exception{
-        touristService.saveAttraction(touristAttraction);
-        model.addAttribute("attraction", touristAttraction);
+    public String addAttraction(@ModelAttribute TouristAttractionTagDTO dto, Model model) throws Exception {
+        touristService.saveDTOAttraction(dto);
         return "redirect:/attractions";
-
     }
 
     @GetMapping("/{name}/edit")

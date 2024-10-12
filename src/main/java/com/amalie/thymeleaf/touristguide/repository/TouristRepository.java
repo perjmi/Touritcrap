@@ -4,6 +4,7 @@ import com.amalie.thymeleaf.touristguide.model.City;
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 
+import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -29,20 +30,90 @@ public class TouristRepository {
 
 
     //CREATE
-    public void saveAttraction(TouristAttraction t) throws Exception {
+//    public void saveAttraction(TouristAttraction t)  {
+//
+//        String sqlString = "INSERT INTO touristattraction(name, description, prisDollar, cityId) VALUES(?,?,?,?)";
+//        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")){
+//
+//
+//             PreparedStatement statement = con.prepareStatement(sqlString);
+//            statement.setString(1, t.getName());
+//            statement.setString(2, t.getDescription());
+//            statement.setDouble(3, t.getPrisDollar());
+//            statement.setInt(4, t.getCityId());
+//            System.out.println("SQL query: " + sqlString);
+//
+//            statement.executeUpdate();
+//
+//        } catch (SQLException err) {
+//            System.out.println("An error has occurred.");
+//            System.out.println("See full details below.");
+//            System.out.println(dbUrl + " " + username + " " + password);
+//            err.printStackTrace();
+//        }
+//    }
+    public List<TouristAttractionTagDTO> getAllDTOAttractions() {
+        List<TouristAttractionTagDTO> attractions = new ArrayList<>();
+        String sqlString = "SELECT name, tourist_id, description, prisDollar, cityId FROM touristattraction";
+        String sqlString2 = "SELECT tag_id FROM touristattraction_tag WHERE tourist_id = ?";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlString);
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int tourist_id = resultSet.getInt("tourist_id");
+                String description = resultSet.getString("description");
+                double prisDollar = resultSet.getDouble("prisDollar");
+                int cityId = resultSet.getInt("cityId");
+
+                PreparedStatement statement2 = con.prepareStatement(sqlString2);
+                statement2.setInt(1, tourist_id);
+                ResultSet resultsetTags = statement2.executeQuery();
+                List<Integer> attractionTags = new ArrayList<>();
+
+
+                while (resultsetTags.next()) {
+                    attractionTags.add(resultsetTags.getInt("tag_id"));
+                }
+                TouristAttractionTagDTO dto = new TouristAttractionTagDTO(name, tourist_id, description, prisDollar, cityId, attractionTags);
+                attractions.add(dto);
+            }
+
+        } catch (SQLException err) {
+            System.out.println("An error has occurred.");
+            System.out.println("See full details below.");
+            err.printStackTrace();
+        }
+        return attractions;
+    }
+
+    public void saveDTOAttraction(TouristAttractionTagDTO t) {
 
         String sqlString = "INSERT INTO touristattraction(name, description, prisDollar, cityId) VALUES(?,?,?,?)";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        String sqlTags = "INSERT INTO touristattraction_tag(tourist_id, tag_id) VALUES(?,?)";
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
 
 
-             PreparedStatement statement = con.prepareStatement(sqlString)) {
+            PreparedStatement statement = con.prepareStatement(sqlString, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, t.getName());
             statement.setString(2, t.getDescription());
             statement.setDouble(3, t.getPrisDollar());
             statement.setInt(4, t.getCityId());
             System.out.println("SQL query: " + sqlString);
-
             statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                int tourist_id = rs.getInt(1);
+
+
+                PreparedStatement statementTags = con.prepareStatement(sqlTags);
+                for (int tagId : t.getTagIds()) {
+                    statementTags.setInt(1, tourist_id);
+                    statementTags.setInt(2, tagId);
+                    statementTags.executeUpdate();
+                }
+            }
 
         } catch (SQLException err) {
             System.out.println("An error has occurred.");
@@ -62,9 +133,9 @@ public class TouristRepository {
             ResultSet resultSet = statement.executeQuery(sqlString);
 
             while (resultSet.next()) {
-                String tname = resultSet.getString("tname");
+                String tname = resultSet.getString("name");
                 String description = resultSet.getString("description");
-                double pris = resultSet.getDouble("pris");
+                double pris = resultSet.getDouble("prisDollar");
                 int cityid = resultSet.getInt("cityId");
                 attractions.add(new TouristAttraction(tname, description, pris, cityid));
             }
@@ -77,7 +148,7 @@ public class TouristRepository {
 
 
     public TouristAttraction getAttractionByName(String name) {
-        String sqlString = "SELECT t.tname, t.description, t.pris, c.cityId, c.name FROM touristattraction t JOIN city c ON t.cityId = c.cityId WHERE t.tname = ?";
+        String sqlString = "SELECT t.name, t.description, t.prisDollar, c.cityId, c.name FROM touristattraction t JOIN city c ON t.cityId = c.cityId WHERE t.name = ?";
         TouristAttraction touristAttraction = null;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
@@ -89,9 +160,9 @@ public class TouristRepository {
 
             // Hvis der findes en attraktion med det navn, opret et Java TouristAttraction-objekt
             if (resultSet.next()) {
-                String attractionName = resultSet.getString("tname");
+                String attractionName = resultSet.getString("name");
                 String description = resultSet.getString("description");
-                double pris = resultSet.getDouble("pris");
+                double pris = resultSet.getDouble("prisDollar");
                 int cityId = resultSet.getInt("cityId");
 
                 touristAttraction = new TouristAttraction(attractionName, description, pris, cityId);

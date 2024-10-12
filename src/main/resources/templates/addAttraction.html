@@ -9,17 +9,17 @@
 </head>
 <body>
 <h1>Add Tourist Attraction</h1>
-<form action="#" th:action="@{/save}" class="form-label" th:object="${attraction}" method="post">
+<form action="#" th:action="@{/save}" class="form-label" th:object="${dto}" method="post">
     <label for="name">Name:</label>
     <input id="name" class="form-control"
            type="text"
-           th:value="${attraction.name}"
+           th:value="${dto.name}"
            th:field="*{name}"/>
     <br>
     <label for="description">Description:</label>
     <input id="description" class="form-control"
            type="text"
-           th:value="${attraction.description}"
+           th:value="${dto.description}"
            th:field="*{description}"/>
     <br>
     <label for="city">City:</label>
@@ -33,11 +33,10 @@
     <label>Tags:</label>
     <br>
     <div>
-        <span th:each="tag : ${availableTags}">
-       <input type="checkbox" th:field="*{tagsId}" th:value="${tag.tagId}"/>
-            <label th:for="${tag.name}" th:text="${tag.name}"></label><br>
-
-    </span>
+        <th:block th:each="tag : ${availableTags}">
+            <input type="checkbox" th:field="*{tagIds}" th:value="${tag.id}"/>
+            <label th:for="${tag.id}" th:text="${tag.name}"></label><br>
+        </th:block>
     </div>
     <br><br>
     <button type="submit">Add</button>
