@@ -2,8 +2,6 @@ package com.amalie.thymeleaf.touristguide.model;
 import com.amalie.thymeleaf.touristguide.repository.CurrencyRates;
 import com.amalie.thymeleaf.touristguide.repository.CurrencyService;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class TouristAttraction {
     private String name;
