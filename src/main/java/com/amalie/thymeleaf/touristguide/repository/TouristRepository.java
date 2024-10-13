@@ -147,14 +147,14 @@ public class TouristRepository {
     }
 
 
-    public TouristAttraction getAttractionByName(String name) {
-        String sqlString = "SELECT t.name, t.description, t.prisDollar, t.tourist_id, t.cityId FROM touristattraction t  WHERE t.name = ?";
+        public TouristAttraction getAttractionById(int id) {
+        String sqlString = "SELECT t.name, t.description, t.prisDollar, t.tourist_id, t.cityId FROM touristattraction t  WHERE t.tourist_id = ?";
         TouristAttraction touristAttraction = null;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
              PreparedStatement statement = con.prepareStatement(sqlString)) {
 
-            statement.setString(1, name);
+            statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
 

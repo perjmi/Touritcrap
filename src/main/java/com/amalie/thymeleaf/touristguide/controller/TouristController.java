@@ -48,9 +48,9 @@ public class TouristController {
         return "redirect:/attractions";
     }
 
-    @GetMapping("/attractions/{name}/tags")
-    public String getAttractionTags(@PathVariable String name, Model model) { //pathvariable fordi den kommer fra url path
-        TouristAttraction t = touristService.getAttractionByName(name);
+    @GetMapping("/attractions/{id}/tags")
+    public String getAttractionTags(@PathVariable int id, Model model) { //pathvariable fordi den kommer fra url path
+        TouristAttraction t = touristService.getAttractionById(id);
         model.addAttribute("attraction", t);
         model.addAttribute("tags", touristService.getTags(t));
         return "showTags";

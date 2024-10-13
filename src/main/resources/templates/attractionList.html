@@ -45,7 +45,7 @@
             </form>
         </td>
         <td>
-            <form th:action="@{/attractions/{name}/tags(name=${touristattraction.name})}" method="get" target="_blank">
+            <form th:action="@{/attractions/{id}/tags(id=${touristattraction.tourist_id})}" method="get" target="_blank">
                 <button type="submit">Tags</button>
             </form>
         </td>

@@ -27,9 +27,6 @@ public class TouristService {
         return touristRepository.getAllAttractions();
     }
 
-    public TouristAttraction getAttractionByName(String name) {
-        return touristRepository.getAttractionByName(name);
-    }
 
     public void deleteAttraction(String name) {
         touristRepository.deleteAttraction(name);
@@ -51,6 +48,9 @@ public class TouristService {
     }
     public void saveDTOAttraction(TouristAttractionTagDTO t) {
         touristRepository.saveDTOAttraction(t);
+    }
+    public TouristAttraction getAttractionById(int id) {
+        return touristRepository.getAttractionById(id);
     }
 
 }
