@@ -28,6 +28,14 @@ public class TouristAttraction {
         this.prisDollar = prisDollar;
     }
 
+    public TouristAttraction(String name, String description, double prisDollar, int tourist_id,int cityId) {
+        this.name = name;
+        this.tourist_id = tourist_id;
+        this.description = description;
+        this.prisDollar = prisDollar;
+        this.cityId = cityId;
+    }
+
     public int getTourist_id() {
         return tourist_id;
     }

@@ -148,7 +148,7 @@ public class TouristRepository {
 
 
     public TouristAttraction getAttractionByName(String name) {
-        String sqlString = "SELECT t.name, t.description, t.prisDollar, c.cityId, c.name FROM touristattraction t JOIN city c ON t.cityId = c.cityId WHERE t.name = ?";
+        String sqlString = "SELECT t.name, t.description, t.prisDollar, t.tourist_id, t.cityId FROM touristattraction t  WHERE t.name = ?";
         TouristAttraction touristAttraction = null;
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
@@ -163,9 +163,10 @@ public class TouristRepository {
                 String attractionName = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 double pris = resultSet.getDouble("prisDollar");
+                int touristId = resultSet.getInt("tourist_id");
                 int cityId = resultSet.getInt("cityId");
 
-                touristAttraction = new TouristAttraction(attractionName, description, pris, cityId);
+                touristAttraction = new TouristAttraction(attractionName, description, pris, touristId, cityId);
             }
 
         } catch (SQLException e) {
@@ -229,14 +230,13 @@ public class TouristRepository {
         return avaliableTags;
     }
 
-
     public List<Tag> getTags(TouristAttraction t) {
         List<Tag> attractionTags = new ArrayList<>();
-        String sqlString = "SELECT touristattraction_tag.tag_id, tag.tag_name FROM touristattraction_tag INNER JOIN tags ON touristattraction_tag.tag_id = tags.tag_id AND touristattraction_tag.tourist_id = ?";
+        String sqlString = "SELECT touristattraction_tag.tag_id, tag.tag_name FROM touristattraction_tag, tag WHERE touristattraction_tag.tag_id = tag.tag_id AND touristattraction_tag.tourist_id = ?";
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
              PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setInt(1, t.getTourist_id());
-            ResultSet resultSet = statement.executeQuery(sqlString);
+            ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String tagName = resultSet.getString("tag_name");

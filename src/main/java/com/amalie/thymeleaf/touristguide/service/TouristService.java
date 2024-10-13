@@ -19,7 +19,9 @@ public class TouristService {
         touristRepository = new TouristRepository();
     }
 
-
+    public List<TouristAttractionTagDTO> getAllDTOAttractions() {
+        return touristRepository.getAllDTOAttractions();
+    }
     //READ
     public List<TouristAttraction> getAllAttractions() {
         return touristRepository.getAllAttractions();

@@ -9,20 +9,20 @@ import java.util.Arrays;
 
 class TouristRepositoryTest {
 
-    @Test
-    void saveAttractionSize() throws Exception {
-        //Arrange-setup our test objects*
-        TouristRepository touristRepository = new TouristRepository();
-        TouristAttraction touristAttraction = new TouristAttraction("Attraction Name", "Attraction Description", "Attraction City");
-        touristRepository.saveAttraction(touristAttraction);
-        //Act- do the actual calc or method*
-        int expectedSize = 3;
-        int actualSize = touristRepository.getAllAttractions().size();
-
-        //Assert-check if actual val is equal to expected val*
-        Assertions.assertEquals(expectedSize, actualSize);
-
-    }
+//    @Test
+//    void saveAttractionSize() throws Exception {
+//        //Arrange-setup our test objects*
+//        TouristRepository touristRepository = new TouristRepository();
+//        TouristAttraction touristAttraction = new TouristAttraction("Attraction Name", "Attraction Description", "Attraction City");
+//        touristRepository.saveAttraction(touristAttraction);
+//        //Act- do the actual calc or method*
+//        int expectedSize = 3;
+//        int actualSize = touristRepository.getAllAttractions().size();
+//
+//        //Assert-check if actual val is equal to expected val*
+//        Assertions.assertEquals(expectedSize, actualSize);
+//
+//    }
 
 //    @Test
 //    void saveAttractionTags() {

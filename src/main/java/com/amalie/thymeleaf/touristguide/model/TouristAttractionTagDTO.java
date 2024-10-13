@@ -1,5 +1,8 @@
 package com.amalie.thymeleaf.touristguide.model;
 
+import com.amalie.thymeleaf.touristguide.repository.CurrencyRates;
+import com.amalie.thymeleaf.touristguide.repository.CurrencyService;
+
 import java.util.List;
 
 public class TouristAttractionTagDTO {
@@ -78,6 +81,15 @@ public class TouristAttractionTagDTO {
 
     public void setTagIds(List<Integer> tagIds) {
         this.tagIds = tagIds;
+    }
+    public double getPrice(String currency) throws Exception{
+        CurrencyService currencyService = new CurrencyService();
+        CurrencyRates rates = currencyService.getRates();
+        if (currency.equals("EUR")) {
+            return rates.getEUR()*prisDollar;
+        } else {
+            return rates.getDKK()*prisDollar;
+        }
     }
 
     @Override

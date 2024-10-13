@@ -22,9 +22,17 @@ public class TouristController {
         touristService = new TouristService(); //vi inistaniserer
     }
 
+//    @GetMapping("/attractions")
+//    public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
+//        List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
+//        model.addAttribute("attractions", touristAttractions); //sender med som argument
+//        model.addAttribute("cities", touristService.getCities());
+//        model.addAttribute("valuta", valuta);
+//        return "attractionList";
+//    }
     @GetMapping("/attractions")
     public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
-        List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
+        List<TouristAttractionTagDTO> touristAttractions = touristService.getAllDTOAttractions();
         model.addAttribute("attractions", touristAttractions); //sender med som argument
         model.addAttribute("cities", touristService.getCities());
         model.addAttribute("valuta", valuta);
