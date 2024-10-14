@@ -8,11 +8,15 @@ import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.*;
 import java.util.*;
 
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
+    private static final Logger logger = LoggerFactory.getLogger(TouristRepository.class);
     @Value("${spring.datasource.url}")
     private String dbUrl;
 
@@ -54,10 +58,8 @@ public class TouristRepository {
                 attractions.add(dto);
             }
 
-        } catch (SQLException err) {
-            System.out.println("An error has occurred.");
-            System.out.println("See full details below.");
-            err.printStackTrace();
+        } catch (SQLException e) {
+            logger.error("SQL exception occurred", e);
         }
         return attractions;
     }
@@ -88,12 +90,11 @@ public class TouristRepository {
                 }
             }
 
-        } catch (SQLException err) {
-            System.out.println("An error has occurred.");
-            System.out.println("See full details below.");
+        } catch (SQLException e) {
+            logger.error("SQL exception occurred", e);
             System.out.println(dbUrl + " " + username + " " + password);
-            err.printStackTrace();
         }
+
     }
 
     public TouristAttractionTagDTO getDTOAttractionById(int id) {
@@ -124,10 +125,8 @@ public class TouristRepository {
                 dto = new TouristAttractionTagDTO(name, tourist_id, description, prisDollar, cityId, attractionTags);
             }
 
-        } catch (SQLException err) {
-            System.out.println("An error has occurred.");
-            System.out.println("See full details below.");
-            err.printStackTrace();
+        } catch (SQLException e) {
+            logger.error("SQL exception occurred", e);
         }
         return dto;
     }
@@ -149,7 +148,7 @@ public class TouristRepository {
                 attractions.add(new TouristAttraction(tname, description, pris, cityid));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
 
         return attractions;
@@ -179,7 +178,7 @@ public class TouristRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
 
         return touristAttraction;
@@ -200,8 +199,7 @@ public class TouristRepository {
 
 
         } catch (SQLException e) {
-            System.out.println("ERROR!!");
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
     }
 
@@ -221,7 +219,7 @@ public class TouristRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
         return cities;
     }
@@ -241,7 +239,7 @@ public class TouristRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
         return avaliableTags;
     }
@@ -261,7 +259,7 @@ public class TouristRepository {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("SQL exception occurred", e);
         }
         return attractionTags;
     }
@@ -270,7 +268,6 @@ public class TouristRepository {
     public void updateAttraction(TouristAttractionTagDTO dto) {
         deleteDTOAttraction(dto.getTourist_id());
         saveDTOAttraction(dto);
-
     }
 
 }
