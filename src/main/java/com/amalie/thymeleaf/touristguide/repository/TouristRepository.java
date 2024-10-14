@@ -30,7 +30,7 @@ public class TouristRepository {
         List<TouristAttractionTagDTO> attractions = new ArrayList<>();
         String sqlString = "SELECT name, tourist_id, description, prisDollar, cityId FROM touristattraction";
         String sqlString2 = "SELECT tag_id FROM touristattraction_tag WHERE tourist_id = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password)) {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlString);
 
@@ -66,7 +66,7 @@ public class TouristRepository {
 
         String sqlString = "INSERT INTO touristattraction(name, description, prisDollar, cityId) VALUES(?,?,?,?)";
         String sqlTags = "INSERT INTO touristattraction_tag(tourist_id, tag_id) VALUES(?,?)";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password)) {
 
             PreparedStatement statement = con.prepareStatement(sqlString, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, t.getName());
@@ -100,7 +100,7 @@ public class TouristRepository {
         String sqlString = "SELECT name, description, prisDollar, tourist_id, cityId FROM touristattraction WHERE tourist_id = ?";
         String sqlString2 = "SELECT tag_id FROM touristattraction_tag WHERE tourist_id = ?";
         TouristAttractionTagDTO dto = new TouristAttractionTagDTO();
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password)) {
             PreparedStatement statement = con.prepareStatement(sqlString);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -137,7 +137,7 @@ public class TouristRepository {
     public List<TouristAttraction> getAllAttractions() {
         List<TouristAttraction> attractions = new ArrayList<>();
         String sqlString = "SELECT * FROM touristattraction";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
              Statement statement = con.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sqlString);
 
@@ -160,7 +160,7 @@ public class TouristRepository {
         String sqlString = "SELECT t.name, t.description, t.prisDollar, t.tourist_id, t.cityId FROM touristattraction t  WHERE t.tourist_id = ?";
         TouristAttraction touristAttraction = null;
 
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
              PreparedStatement statement = con.prepareStatement(sqlString)) {
 
             statement.setInt(1, id);
@@ -189,7 +189,7 @@ public class TouristRepository {
     public void deleteDTOAttraction(int id) {
         String sqlStringTag = "DELETE FROM touristattraction_tag WHERE tourist_id = ?";
         String sqlString = "DELETE FROM touristattraction WHERE tourist_id = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
              PreparedStatement statement2 = con.prepareStatement(sqlStringTag)) {
             statement2.setInt(1, id);
             statement2.executeUpdate();
@@ -209,7 +209,7 @@ public class TouristRepository {
     public List<City> getCities() {
         List<City> cities = new ArrayList<>();
         String sqlString = "SELECT * FROM city";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
 
              Statement statement = con.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sqlString);
@@ -249,7 +249,7 @@ public class TouristRepository {
     public List<Tag> getTags(TouristAttraction t) {
         List<Tag> attractionTags = new ArrayList<>();
         String sqlString = "SELECT touristattraction_tag.tag_id, tag.tag_name FROM touristattraction_tag, tag WHERE touristattraction_tag.tag_id = tag.tag_id AND touristattraction_tag.tourist_id = ?";
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
+        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
              PreparedStatement statement = con.prepareStatement(sqlString)) {
             statement.setInt(1, t.getTourist_id());
             ResultSet resultSet = statement.executeQuery();
