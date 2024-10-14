@@ -22,6 +22,12 @@
            th:value="${dto.description}"
            th:field="*{description}"/>
     <br>
+    <label for="pris">Price in dollar:</label>
+    <input id="pris" class="form-control"
+           type="text"
+           th:value="${dto.prisDollar}"
+           th:field="*{prisDollar}"/>
+    <br>
     <label for="city">City:</label>
     <select id="city" th:field="*{cityId}">
         <th:block th:each="by : ${cities}">

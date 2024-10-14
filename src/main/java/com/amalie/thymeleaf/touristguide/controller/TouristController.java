@@ -1,7 +1,4 @@
 package com.amalie.thymeleaf.touristguide.controller;
-
-import com.amalie.thymeleaf.touristguide.model.City;
-import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
 import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import com.amalie.thymeleaf.touristguide.service.TouristService;
@@ -22,14 +19,6 @@ public class TouristController {
         touristService = new TouristService(); //vi inistaniserer
     }
 
-//    @GetMapping("/attractions")
-//    public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
-//        List<TouristAttraction> touristAttractions = touristService.getAllAttractions();
-//        model.addAttribute("attractions", touristAttractions); //sender med som argument
-//        model.addAttribute("cities", touristService.getCities());
-//        model.addAttribute("valuta", valuta);
-//        return "attractionList";
-//    }
     @GetMapping("/attractions")
     public String getAttractions(@RequestParam(defaultValue = "EUR") String valuta, Model model) { // model bruger spring til at kommunikere med th
         List<TouristAttractionTagDTO> touristAttractions = touristService.getAllDTOAttractions();
@@ -71,9 +60,9 @@ public class TouristController {
         return "redirect:/attractions";
     }
 
-    @GetMapping("/{name}/edit")
-    public String editAttraction(@PathVariable String name, Model model) {
-        TouristAttraction t = touristService.getAttractionByName(name);
+    @GetMapping("/{id}/edit")
+    public String editAttraction(@PathVariable int id, Model model) {
+        TouristAttractionTagDTO t = touristService.getDTOAttractionById(id);
         model.addAttribute("attraction", t);
         model.addAttribute("cities", touristService.getCities());
         model.addAttribute("description", t.getDescription());
@@ -82,14 +71,15 @@ public class TouristController {
     }
 
     @PostMapping("/update")
-    public String editAttraction(@ModelAttribute TouristAttraction touristAttraction) {
-        touristService.updateAttraction(touristAttraction);
+    public String editAttraction(@ModelAttribute TouristAttractionTagDTO dto) {
+        touristService.updateAttraction(dto);
         return "redirect:/attractions"; //redirect: sig til klienten bed om denne side
     }
 
-    @PostMapping("/delete/{name}")
-    public String deleteAttraction(@ModelAttribute TouristAttraction touristAttraction) {
-        touristService.deleteAttraction(touristAttraction.getName());
+
+    @PostMapping("/delete")
+    public String deleteAttraction(@RequestParam int id) {
+        touristService.deleteDTOAttraction(id);
         return "redirect:/attractions";
     }
 

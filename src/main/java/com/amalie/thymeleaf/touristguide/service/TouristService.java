@@ -8,7 +8,7 @@ import com.amalie.thymeleaf.touristguide.repository.TouristRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 public class TouristService {
@@ -22,14 +22,14 @@ public class TouristService {
     public List<TouristAttractionTagDTO> getAllDTOAttractions() {
         return touristRepository.getAllDTOAttractions();
     }
-    //READ
+
     public List<TouristAttraction> getAllAttractions() {
         return touristRepository.getAllAttractions();
     }
 
 
-    public void deleteAttraction(String name) {
-        touristRepository.deleteAttraction(name);
+    public void deleteDTOAttraction(int id) {
+        touristRepository.deleteDTOAttraction(id);
     }
 
     public List<City> getCities() {
@@ -43,14 +43,17 @@ public class TouristService {
         return touristRepository.getTags(t);
     }
 
-    public void updateAttraction(TouristAttraction updatedAttraction) {
-        touristRepository.updateAttraction(updatedAttraction);
+    public void updateAttraction(TouristAttractionTagDTO dto) {
+        touristRepository.updateAttraction(dto);
     }
     public void saveDTOAttraction(TouristAttractionTagDTO t) {
         touristRepository.saveDTOAttraction(t);
     }
     public TouristAttraction getAttractionById(int id) {
         return touristRepository.getAttractionById(id);
+    }
+    public TouristAttractionTagDTO getDTOAttractionById(int id) {
+        return touristRepository.getDTOAttractionById(id);
     }
 
 }

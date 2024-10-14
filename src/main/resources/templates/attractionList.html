@@ -35,12 +35,12 @@
             th:text="${city.name}"></td>
         <td th:text="${touristattraction.getPrice(valuta)}"></td>
         <td>
-            <form th:action="@{ ${touristattraction.name} + '/edit'}" method="get">
+            <form th:action="@{ ${touristattraction.tourist_id} + '/edit'}" method="get">
                 <button type="submit">Edit</button>
             </form>
         </td>
         <td> <!--Modificer action endpoint-->
-            <form th:action="@{/delete/{name}(name=${touristattraction.name})}" method="post">
+            <form th:action="@{/delete (id=${touristattraction.tourist_id})}" method="post">
                 <button type="submit">Delete</button>
             </form>
         </td>

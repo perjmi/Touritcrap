@@ -10,18 +10,28 @@
 <body>
 <h1>Edit the tourist attraction: <span th:text="${attraction.name}"></span></h1>
 <form action="#" th:action="@{/update}" class="form-label" th:object="${attraction}" method="post">
-
-    <input id="name" class="form-control"
+    <input id="id" class="form-control"
            type="hidden"
+           th:value="${attraction.tourist_id}"
+           th:field="*{tourist_id}"/>
+
+    <label for="name">Name:</label>
+    <input id="name" class="form-control"
+           type="text"
            th:value="${attraction.name}"
            th:field="*{name}"/>
-
     <br>
     <label for="description">Description:</label>
     <input id="description" class="form-control"
            type="text"
            th:value="${attraction.description}"
            th:field="*{description}"/>
+    <br>
+    <label for="pris">Price in dollar:</label>
+    <input id="pris" class="form-control"
+           type="text"
+           th:value="${attraction.prisDollar}"
+           th:field="*{prisDollar}"/>
     <br>
     <label for="city">City:</label>
     <select id="city" th:field="*{cityId}">
@@ -34,8 +44,8 @@
     <br>
     <div>
         <span th:each="tag : ${availableTags}">
-            <input type="checkbox" th:field="*{tags}" th:value="${tag}" th:checked="${attraction.tags.contains(tag)}"/>
-            <label th:for="${tag}" th:text="${tag}"></label><br>
+            <input type="checkbox" th:field="*{tagIds}" th:value="${tag.id}"/>
+            <label th:for="${tag}" th:text="${tag.name}"></label><br>
         </span>
     </div>
     <br><br>
