@@ -30,7 +30,7 @@ public class TouristRepository {
         List<TouristAttractionTagDTO> attractions = new ArrayList<>();
         String sqlString = "SELECT name, tourist_id, description, prisDollar, cityId FROM touristattraction";
         String sqlString2 = "SELECT tag_id FROM touristattraction_tag WHERE tourist_id = ?";
-        try (Connection con = DriverManager.getConnection(dbUrl, username, password)) {
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie")) {
             Statement statement = con.createStatement();
             ResultSet resultSet = statement.executeQuery(sqlString);
 
