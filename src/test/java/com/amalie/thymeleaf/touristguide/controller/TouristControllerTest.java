@@ -2,6 +2,7 @@ package com.amalie.thymeleaf.touristguide.controller;
 
 import com.amalie.thymeleaf.touristguide.model.Tag;
 import com.amalie.thymeleaf.touristguide.model.TouristAttraction;
+import com.amalie.thymeleaf.touristguide.model.TouristAttractionTagDTO;
 import com.amalie.thymeleaf.touristguide.repository.CurrencyService;
 import com.amalie.thymeleaf.touristguide.service.TouristService;
 import net.bytebuddy.dynamic.TypeResolutionStrategy;
@@ -27,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class TouristControllerTest {
 
     private TouristAttraction touristAttraction = new TouristAttraction();
+    private TouristAttractionTagDTO touristAttractionTagDTO = new TouristAttractionTagDTO();
 
     @Autowired //spring instantierer selv objekt
     private MockMvc mockMvc;
@@ -67,18 +69,19 @@ class TouristControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("showTags"))
                 .andExpect(content().string(containsString("ballon")));
+
     }
     @Test
     void createTouristAttractionForm() throws Exception {
         mockMvc.perform(get("/add"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("attraction"))
+                .andExpect(model().attributeExists("dto"))
                 .andExpect(view().name("addAttraction"));
     }
 
     @Test
     void saveTouristAttraction() throws Exception {
-        mockMvc.perform(post("/save").sessionAttr("touristAttraction", this.touristAttraction))
+        mockMvc.perform(post("/save").sessionAttr("touristAttraction", this.touristAttractionTagDTO))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/attractions"));
     }
