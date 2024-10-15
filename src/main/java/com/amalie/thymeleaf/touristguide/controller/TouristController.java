@@ -14,8 +14,8 @@ import java.util.List;
 public class TouristController {
     private final TouristService touristService;
 
-    public TouristController() {
-        touristService = new TouristService(); //vi inistaniserer
+    public TouristController(TouristService touristService) {
+        this.touristService = touristService; //vi inistaniserer
     }
 
     @GetMapping("/attractions")

@@ -17,17 +17,31 @@ import java.util.*;
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
     private static final Logger logger = LoggerFactory.getLogger(TouristRepository.class);
-    @Value("${spring.datasource.url}")
-    private String dbUrl;
+    private final String dbUrl;
+    private final String username;
+    private final String password;
 
-    @Value("${spring.datasource.username}")
-    private String username;
+    // Konstruktør med @Value-injektion
+    public TouristRepository(
+            @Value("${spring.datasource.url}") String dbUrl,
+            @Value("${spring.datasource.username}") String username,
+            @Value("${spring.datasource.password}") String password) {
+        this.dbUrl = dbUrl;
+        this.username = username;
+        this.password = password;
+    }
 
-    @Value("${spring.datasource.password}")
-    private String password;
 
-    public TouristRepository() {
+    public String getDbUrl() {
+        return dbUrl;
+    }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public List<TouristAttractionTagDTO> getAllDTOAttractions() {

@@ -12,10 +12,10 @@ import java.util.List;
 @Service
 public class TouristService {
 
-    TouristRepository touristRepository;
+    private final TouristRepository touristRepository;
 
-    public TouristService() {
-        touristRepository = new TouristRepository();
+    public TouristService(TouristRepository touristRepository) {
+        this.touristRepository=touristRepository;
     }
 
     public List<TouristAttractionTagDTO> getAllDTOAttractions() {
