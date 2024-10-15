@@ -17,31 +17,17 @@ import java.util.*;
 @Repository //annotation der fortæller spring, at denne klasse har ansvar for adgang til date
 public class TouristRepository {
     private static final Logger logger = LoggerFactory.getLogger(TouristRepository.class);
-    private final String dbUrl;
-    private final String username;
-    private final String password;
+    @Value("${spring.datasource.url}")
+    private String dbUrl;
 
-    // Konstruktør med @Value-injektion
-    public TouristRepository(
-            @Value("${spring.datasource.url}") String dbUrl,
-            @Value("${spring.datasource.username}") String username,
-            @Value("${spring.datasource.password}") String password) {
-        this.dbUrl = dbUrl;
-        this.username = username;
-        this.password = password;
-    }
+    @Value("${spring.datasource.username}")
+    private String username;
 
+    @Value("${spring.datasource.password}")
+    private String password;
 
-    public String getDbUrl() {
-        return dbUrl;
-    }
+    public TouristRepository() {
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public List<TouristAttractionTagDTO> getAllDTOAttractions() {
@@ -221,7 +207,8 @@ public class TouristRepository {
     public List<City> getCities() {
         List<City> cities = new ArrayList<>();
         String sqlString = "SELECT * FROM city";
-        try (Connection con = DriverManager.getConnection(dbUrl, username, password);
+        System.out.println(dbUrl + " " + username + " "+ password);
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/touristattraction", "root", "amalie");
 
              Statement statement = con.createStatement()) {
             ResultSet resultSet = statement.executeQuery(sqlString);
